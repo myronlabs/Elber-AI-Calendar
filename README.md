@@ -68,8 +68,8 @@ src/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/slyfox1186/ElberMaster.git
-cd ElberMaster
+git clone https://github.com/myronlabs/Elber-AI-Calendar.git
+cd Elber-AI-Calendar
 ```
 
 2. Install dependencies:
