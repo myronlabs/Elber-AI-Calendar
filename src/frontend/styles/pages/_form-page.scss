@@ -1,0 +1,738 @@
+// ============================================================================
+// ENTERPRISE FORM PAGES - SALESFORCE LIGHTNING LEVEL
+// Professional authentication form pages (forgot password, reset, signup, verify)
+// ============================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// FORM PAGE BASE LAYOUT - MOBILE FIRST
+// ============================================================================
+
+.form-page,
+.auth-form-page {
+  min-height: 0;
+  background: linear-gradient(135deg, $surface-background 0%, $surface-secondary 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+  position: relative;
+  overflow: hidden;
+
+  // Tablet and up: enhanced spacing
+  @media (min-width: $breakpoint-md) {
+    padding: $space-6;
+  }
+
+  // Subtle background pattern for enterprise feel
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 25% 25%, rgba(1, 118, 211, 0.05) 0%, transparent 50%),
+                      radial-gradient(circle at 75% 75%, rgba(255, 107, 53, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+// ============================================================================
+// FORM CARD - ENTERPRISE STYLING
+// ============================================================================
+
+.form-card,
+.auth-form-card {
+  background-color: $surface-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-xl;
+  padding: $space-8;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  backdrop-filter: blur(10px);
+
+  // Tablet and up: larger card
+  @media (min-width: $breakpoint-md) {
+    padding: $space-12;
+    max-width: 500px;
+  }
+
+  // Large desktop: maximum size
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-16;
+    max-width: 540px;
+  }
+
+  // Subtle inner glow for premium feel
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: $radius-xl;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(1, 118, 211, 0.2), rgba(255, 107, 53, 0.1));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+// ============================================================================
+// FORM HEADER - PROFESSIONAL BRANDING
+// ============================================================================
+
+.form-header,
+.auth-form-header {
+  text-align: center;
+  margin-bottom: $space-8;
+
+  .logo {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $brand-primary;
+    margin-bottom: $space-4;
+    letter-spacing: -0.02em;
+
+    // Tablet and up: larger logo
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  .title {
+    color: $text-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $space-3;
+    line-height: $line-height-tight;
+
+    // Tablet and up: larger title
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .subtitle {
+    color: $text-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-relaxed;
+    margin-bottom: $space-2;
+
+    // Tablet and up: larger subtitle
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .description {
+    color: $text-tertiary;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    max-width: 400px;
+    margin: 0 auto;
+
+    // Tablet and up: larger description
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// ============================================================================
+// FORM CONTENT - ENTERPRISE FORM STYLING
+// ============================================================================
+
+.form-content,
+.auth-form-content {
+  .form-group {
+    margin-bottom: $space-6;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.form-group--large {
+      margin-bottom: $space-8;
+    }
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: $space-2;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: $space-4;
+    background-color: $surface-secondary;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    color: $text-primary;
+    font-size: $font-size-base;
+    font-family: $font-family-primary;
+    transition: all $transition-fast;
+    min-height: $input-height-base;
+
+    &::placeholder {
+      color: $text-tertiary;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $brand-primary;
+      box-shadow: $shadow-focus;
+      background-color: $surface-tertiary;
+      transform: translateY(-1px);
+    }
+
+    &:invalid {
+      border-color: $status-error;
+      box-shadow: $shadow-focus-error;
+    }
+
+    &.success {
+      border-color: $status-success;
+      box-shadow: 0 0 0 3px rgba(25, 128, 56, 0.3);
+    }
+
+    // Tablet and up: larger inputs
+    @media (min-width: $breakpoint-md) {
+      padding: $space-5;
+      font-size: $font-size-lg;
+      min-height: $input-height-lg;
+    }
+  }
+
+  .form-error {
+    margin-top: $space-2;
+    color: $status-error;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    &::before {
+      content: '⚠';
+      font-size: $font-size-base;
+    }
+  }
+
+  .form-success {
+    margin-top: $space-2;
+    color: $status-success;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    &::before {
+      content: '✓';
+      font-size: $font-size-base;
+    }
+  }
+
+  .form-help {
+    margin-top: $space-2;
+    color: $text-tertiary;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+  }
+}
+
+// ============================================================================
+// FORM BUTTONS - ENTERPRISE BUTTON STYLING
+// ============================================================================
+
+.form-button,
+.auth-form-button {
+  width: 100%;
+  padding: $space-4 $space-6;
+  background-color: $brand-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-lg;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  font-family: $font-family-primary;
+  cursor: pointer;
+  transition: all $transition-fast;
+  min-height: $button-height-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+
+  &:hover:not(:disabled) {
+    background-color: $brand-primary-dark;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: $shadow-base;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $shadow-focus;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  // Tablet and up: larger button
+  @media (min-width: $breakpoint-md) {
+    padding: $space-5 $space-8;
+    font-size: $font-size-lg;
+    min-height: $button-height-lg;
+  }
+
+  // Loading state
+  &.loading {
+    pointer-events: none;
+
+    .button-text {
+      opacity: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  // Secondary variant
+  &.secondary {
+    background-color: transparent;
+    color: $text-secondary;
+    border: 1px solid $border-primary;
+
+    &:hover:not(:disabled) {
+      background-color: $surface-secondary;
+      color: $text-primary;
+      border-color: $border-secondary;
+    }
+  }
+
+  // Success variant
+  &.success {
+    background-color: $status-success;
+    border-color: $status-success;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($status-success, $lightness: -10%);
+    }
+  }
+}
+
+// ============================================================================
+// FORM NAVIGATION - PROFESSIONAL LINKS
+// ============================================================================
+
+.form-navigation,
+.auth-form-navigation {
+  margin-top: $space-8;
+  text-align: center;
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    color: $text-secondary;
+    text-decoration: none;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-6;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: $brand-primary;
+      transform: translateX(-2px);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $shadow-focus;
+      border-radius: $radius-sm;
+      padding: $space-1 $space-2;
+    }
+
+    &::before {
+      content: '←';
+      font-size: $font-size-base;
+    }
+  }
+
+  .form-links {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    align-items: center;
+
+    // Tablet and up: horizontal layout
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .link {
+      color: $brand-primary-light;
+      text-decoration: none;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      transition: all $transition-fast;
+
+      &:hover {
+        color: $brand-primary;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: $shadow-focus;
+        border-radius: $radius-sm;
+        padding: $space-1 $space-2;
+      }
+    }
+
+    .divider {
+      color: $text-tertiary;
+      font-size: $font-size-sm;
+
+      // Hide on mobile
+      @media (max-width: #{$breakpoint-md - 1px}) {
+        display: none;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// VERIFICATION CODE INPUT - SPECIALIZED STYLING
+// ============================================================================
+
+.verification-input-group {
+  display: flex;
+  gap: $space-3;
+  justify-content: center;
+  margin: $space-6 0;
+
+  .verification-input {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    background-color: $surface-secondary;
+    border: 2px solid $border-primary;
+    border-radius: $radius-lg;
+    color: $text-primary;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $brand-primary;
+      box-shadow: $shadow-focus;
+      background-color: $surface-tertiary;
+      transform: scale(1.05);
+    }
+
+    &.filled {
+      border-color: $status-success;
+      background-color: rgba(25, 128, 56, 0.1);
+    }
+
+    &.error {
+      border-color: $status-error;
+      background-color: $status-error-bg;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    // Tablet and up: larger inputs
+    @media (min-width: $breakpoint-md) {
+      width: 3.5rem;
+      height: 3.5rem;
+      font-size: $font-size-2xl;
+    }
+  }
+}
+
+// ============================================================================
+// SUCCESS/CONFIRMATION STATES
+// ============================================================================
+
+.form-success-state {
+  text-align: center;
+  padding: $space-8 0;
+
+  .success-icon {
+    width: 4rem;
+    height: 4rem;
+    background-color: $status-success;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto $space-6;
+    animation: successPulse 0.6s ease-out;
+
+    &::before {
+      content: '✓';
+      color: $color-white;
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .success-title {
+    color: $text-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $space-3;
+  }
+
+  .success-message {
+    color: $text-secondary;
+    font-size: $font-size-base;
+    line-height: $line-height-relaxed;
+    margin-bottom: $space-6;
+  }
+}
+
+// ============================================================================
+// SPECIFIC PAGE VARIANTS
+// ============================================================================
+
+// Forgot Password Page
+.forgot-password-page {
+  .form-card {
+    max-width: 440px;
+  }
+}
+
+// Reset Password Page
+.reset-password-page {
+  .form-card {
+    max-width: 460px;
+  }
+
+  .password-requirements {
+    margin-top: $space-4;
+    padding: $space-4;
+    background-color: $surface-secondary;
+    border-radius: $radius-base;
+    border-left: 4px solid $brand-primary;
+
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      margin-bottom: $space-2;
+      font-size: $font-size-sm;
+      color: $text-tertiary;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.met {
+        color: $status-success;
+
+        &::before {
+          content: '✓';
+          color: $status-success;
+        }
+      }
+
+      &.unmet::before {
+        content: '○';
+        color: $text-tertiary;
+      }
+    }
+  }
+}
+
+// Create Account Page
+.create-account-page {
+  .form-card {
+    max-width: 500px;
+  }
+
+  .terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    margin: $space-6 0;
+
+    input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: $brand-primary;
+    }
+
+    .terms-text {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      line-height: $line-height-relaxed;
+
+      a {
+        color: $brand-primary-light;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Verify Email Page
+.verify-email-page {
+  .form-card {
+    max-width: 480px;
+  }
+
+  .resend-section {
+    margin-top: $space-8;
+    padding-top: $space-6;
+    border-top: 1px solid $border-subtle;
+    text-align: center;
+
+    .resend-text {
+      color: $text-tertiary;
+      font-size: $font-size-sm;
+      margin-bottom: $space-3;
+    }
+
+    .resend-button {
+      background: none;
+      border: none;
+      color: $brand-primary-light;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $brand-primary;
+      }
+
+      &:disabled {
+        color: $text-disabled;
+        cursor: not-allowed;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-card,
+.auth-form-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// ============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// ============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .form-card,
+  .auth-form-card,
+  .form-button,
+  .auth-form-button,
+  .form-input,
+  .verification-input,
+  .success-icon {
+    animation: none;
+    transition: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .form-card,
+  .auth-form-card {
+    border-width: 2px;
+    border-color: $text-primary;
+  }
+
+  .form-input,
+  .verification-input {
+    border-width: 2px;
+  }
+
+  .form-button,
+  .auth-form-button {
+    border: 2px solid $brand-primary;
+  }
+} 

@@ -1,0 +1,95 @@
+// Base reset and root styles
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+/* Reset Base Styles */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: $dark-theme-page-bg;
+  
+  // Fix for iOS devices and Safari
+  @supports (-webkit-touch-callout: none) {
+    height: -webkit-fill-available;
+  }
+}
+
+html {
+  font-size: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden; // Prevent html from scrolling
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Body Core Styles */
+body {
+  font-family: $font-family-sans-serif;
+  color: $text-color-light;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Body takes full viewport height
+  overflow: hidden; // Prevent body from scrolling
+  
+  // Fix for iOS devices and Safari
+  @supports (-webkit-touch-callout: none) {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Root Container */
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1; // #root takes available space in body
+  overflow: hidden; // #root itself should not scroll; its children must manage scrolling.
+  min-height: 0; // Important for flex children to not overflow their parent when content is large.
+}
+
+/**
+ * Global CSS Custom Properties for DPI-aware Responsive Scaling
+ * These values serve as defaults and will be overridden by JavaScript
+ * based on device characteristics through applyGlobalDpiScaling
+ */
+:root {
+  /* Calendar-specific dimensions - Mobile first */
+  --calendar-cell-height: #{$calendar-cell-min-height}px;
+  --calendar-header-height: 80px;
+  --calendar-event-height: #{$calendar-event-height}px;
+
+  /* General UI dimensions - Mobile first */
+  --card-padding: 12px;
+  --input-height: 38px;
+  --button-height: 40px;
+  --modal-max-width: 90vw;
+  --base-gap: 12px;
+  --base-border-radius: 6px;
+
+  /* Form field dimensions - Mobile first */
+  --input-padding: 10px;
+  --label-margin: 6px;
+  --form-group-margin: 16px;
+
+  /* Mobile-first responsive adjustments */
+  // Tablet and up
+  @media (min-width: $breakpoint-sm) {
+    --calendar-cell-height: #{$calendar-cell-min-height}px;
+    --calendar-header-height: 100px;
+    --input-height: 40px;
+  }
+
+  // Desktop and up
+  @media (min-width: $breakpoint-lg) {
+    --calendar-cell-height: #{$calendar-cell-min-height}px;
+    --calendar-header-height: 120px;
+    --input-height: 42px;
+    --button-height: 44px;
+  }
+} 

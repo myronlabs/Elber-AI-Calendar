@@ -1,0 +1,23 @@
+
+/home/jman/tmp/Myron_Labs/Elber1-2.2.3/src/backend/functions/reset-password.ts
+  264:17  error  'fragment' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/jman/tmp/Myron_Labs/Elber1-2.2.3/src/backend/functions/services/types.ts
+  91:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+/home/jman/tmp/Myron_Labs/Elber1-2.2.3/src/backend/functions/settings.ts
+  440:36  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  447:9   error  Unexpected lexical declaration in case block  no-case-declarations
+  498:28  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  564:28  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  656:28  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  714:28  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  772:28  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  807:9   error  Unexpected lexical declaration in case block  no-case-declarations
+
+/home/jman/tmp/Myron_Labs/Elber1-2.2.3/src/backend/scripts/fix-import-paths.js
+  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
+The file was not found in any of the provided project(s): scripts/fix-import-paths.js
+
+✖ 11 problems (11 errors, 0 warnings)
+

@@ -1,0 +1,21 @@
+{
+	"siteId": "52c3c01d-e945-413f-9561-97dc64ca079e",
+	"geolocation": {
+		"data": {
+			"city": "Midway",
+			"country": {
+				"code": "US",
+				"name": "United States"
+			},
+			"subdivision": {
+				"code": "GA",
+				"name": "Georgia"
+			},
+			"timezone": "America/New_York",
+			"latitude": 31.8082,
+			"longitude": -81.4386,
+			"postalCode": "31320"
+		},
+		"timestamp": 1747952773836
+	}
+}

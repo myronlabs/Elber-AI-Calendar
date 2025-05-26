@@ -1,0 +1,671 @@
+// ============================================================================
+// HIGH-END LOGIN PAGE - MOBILE FIRST DESIGN
+// Professional authentication with perfect scaling from mobile to desktop
+// ============================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// LOGIN PAGE CONTAINER - SIMPLE & EFFECTIVE
+// ============================================================================
+
+// Proper body styling for login pages without !important
+body.login-page-active {
+  overflow-y: auto; // Allow scrolling on login pages
+  overflow-x: hidden; // Prevent horizontal scroll
+  height: 100vh; // Full viewport height
+  height: 100dvh; // Dynamic viewport height for mobile browsers
+  
+  // Mobile and tablet: ensure smooth scrolling
+  @media (max-width: 1024px) {
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  }
+}
+
+.login-page-container {
+  min-height: 0;
+  min-height: 100dvh; // Dynamic viewport height for mobile browsers
+  background: linear-gradient(135deg, $surface-background 0%, $surface-secondary 100%);
+  padding: $space-4;
+  position: relative;
+  overflow-y: auto; // Enable vertical scrolling
+  overflow-x: hidden; // Prevent horizontal scroll
+  
+  // Use flexbox for reliable centering
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // On short screens, allow scrolling instead of strict centering
+  @media (max-height: 700px) {
+    align-items: flex-start;
+    padding-top: $space-4;
+    padding-bottom: $space-4;
+  }
+  
+  // Mobile: minimal padding
+  @media (max-width: 480px) {
+    padding: $space-2;
+  }
+
+  // Mobile landscape: compact padding
+  @media (max-height: 600px) and (orientation: landscape) {
+    padding: $space-2;
+  }
+
+  // Tablet: enhanced spacing
+  @media (min-width: $breakpoint-sm) {
+    padding: $space-6;
+  }
+
+  // Desktop: premium spacing
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-8;
+  }
+
+  // Subtle background pattern for enterprise feel
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(100, 116, 139, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+// ============================================================================
+// LOGIN FORM CARD - SIMPLE CENTERING
+// ============================================================================
+
+.login-form-card {
+  background-color: $surface-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $space-6;
+  width: 100%;
+  max-width: 400px; // Flexible for both login and signup
+  position: relative;
+  backdrop-filter: blur(10px);
+  
+  // Flexbox parent handles centering, no margins needed
+  margin: 0;
+
+  // Mobile: compact but usable
+  @media (max-width: 480px) {
+    padding: $space-4;
+    max-width: 100%; // Use full width on small screens
+    border-radius: $radius-md;
+  }
+
+  // Mobile landscape: optimize for horizontal space
+  @media (max-height: 600px) and (orientation: landscape) {
+    padding: $space-4;
+  }
+
+  // Tablet: enhanced card
+  @media (min-width: $breakpoint-sm) {
+    padding: $space-8;
+    max-width: 480px;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-xl;
+  }
+
+  // Desktop: premium card
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-8; // Balanced padding for desktop
+    max-width: 520px;
+    
+    // Add subtle inner glow for premium feel
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: $radius-xl;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(100, 116, 139, 0.08));
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  }
+
+  // Header styling
+  h2 {
+    color: $text-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $space-2 0;
+    text-align: center;
+    letter-spacing: -0.02em;
+
+    // Small mobile: smaller heading
+    @media (max-width: 360px) {
+      font-size: $font-size-lg;
+    }
+
+    // Mobile landscape: compact heading
+    @media (max-height: 600px) and (orientation: landscape) {
+      font-size: $font-size-lg;
+      margin-bottom: $space-1;
+    }
+
+    // Tablet: enhanced heading
+    @media (min-width: $breakpoint-sm) {
+      font-size: $font-size-2xl;
+      margin-bottom: $space-3;
+    }
+
+    // Desktop: premium heading
+    @media (min-width: $breakpoint-lg) {
+      font-size: $font-size-3xl;
+      margin-bottom: $space-4;
+    }
+
+    // Large desktop: maximum heading
+    @media (min-width: $breakpoint-xl) {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  .subtitle {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    margin: 0 0 $space-6 0;
+    text-align: center;
+    line-height: $line-height-relaxed;
+
+    // Small mobile: extra small subtitle
+    @media (max-width: 360px) {
+      font-size: $font-size-xs;
+      margin-bottom: $space-4;
+    }
+
+    // Mobile landscape: compact subtitle
+    @media (max-height: 600px) and (orientation: landscape) {
+      margin-bottom: $space-3;
+    }
+
+    // Tablet: enhanced subtitle
+    @media (min-width: $breakpoint-sm) {
+      font-size: $font-size-base;
+      margin-bottom: $space-8;
+    }
+
+    // Desktop: premium subtitle
+    @media (min-width: $breakpoint-lg) {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+// ============================================================================
+// FORM STYLING - MOBILE FIRST INPUTS
+// ============================================================================
+
+.login-form-card form {
+  .form-group {
+    margin-bottom: $space-4;
+
+    // Mobile: efficient spacing
+    @media (max-width: 480px) {
+      margin-bottom: $space-3;
+    }
+
+    // Mobile landscape: compact spacing
+    @media (max-height: 600px) and (orientation: landscape) {
+      margin-bottom: $space-2;
+    }
+
+    // Tablet: balanced spacing
+    @media (min-width: $breakpoint-sm) {
+      margin-bottom: $space-5;
+    }
+
+    // Desktop: comfortable spacing
+    @media (min-width: $breakpoint-lg) {
+      margin-bottom: $space-6;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: $space-2;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      // Small mobile: minimal label
+      @media (max-width: 360px) {
+        margin-bottom: $space-1;
+        font-size: $font-size-xs;
+      }
+
+      // Mobile landscape: compact label
+      @media (max-height: 600px) and (orientation: landscape) {
+        margin-bottom: $space-1;
+      }
+
+      // Desktop: enhanced label
+      @media (min-width: $breakpoint-lg) {
+        font-size: $font-size-base;
+        margin-bottom: $space-3;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: $space-3 $space-4;
+      background-color: $surface-secondary;
+      border: 1px solid $border-primary;
+      border-radius: $radius-md;
+      color: $text-primary;
+      font-size: $font-size-base;
+      font-family: $font-family-primary;
+      transition: all $transition-fast;
+      min-height: 48px; // Touch-friendly
+      -webkit-appearance: none;
+      appearance: none;
+
+      // Small mobile: compact input
+      @media (max-width: 360px) {
+        padding: $space-2 $space-3;
+        font-size: $font-size-sm;
+        min-height: 44px;
+      }
+
+      // Mobile landscape: compact input
+      @media (max-height: 600px) and (orientation: landscape) {
+        padding: $space-2 $space-3;
+        min-height: 44px;
+      }
+
+      // Tablet: enhanced input
+      @media (min-width: $breakpoint-sm) {
+        padding: $space-4 $space-5;
+        border-radius: $radius-lg;
+        min-height: 52px;
+      }
+
+      // Desktop: premium input
+      @media (min-width: $breakpoint-lg) {
+        padding: $space-5 $space-6;
+        font-size: $font-size-lg;
+        min-height: 56px;
+      }
+
+      // Large desktop: maximum input
+      @media (min-width: $breakpoint-xl) {
+        padding: $space-6 $space-8;
+        font-size: $font-size-xl;
+        min-height: 60px;
+      }
+
+      &::placeholder {
+        color: $text-tertiary;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $brand-primary;
+        box-shadow: $shadow-focus;
+        background-color: $surface-tertiary;
+        
+        // Only transform on larger screens for performance
+        @media (min-width: $breakpoint-sm) {
+          transform: translateY(-1px);
+        }
+      }
+
+      &:invalid {
+        border-color: $status-error;
+        box-shadow: $shadow-focus-error;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background-color: $surface-background;
+      }
+    }
+  }
+
+  // Sub-actions (forgot password link)
+  .form-group-sub-actions {
+    margin-bottom: $space-4;
+    text-align: right;
+
+    // Mobile landscape: compact spacing
+    @media (max-height: 600px) and (orientation: landscape) {
+      margin-bottom: $space-2;
+    }
+
+    // Tablet: enhanced spacing
+    @media (min-width: $breakpoint-sm) {
+      margin-bottom: $space-6;
+    }
+
+    .forgot-password-link {
+      color: $brand-primary-light;
+      text-decoration: none;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      transition: all $transition-fast;
+      padding: $space-2;
+      border-radius: $radius-sm;
+
+      // Small mobile: smaller link
+      @media (max-width: 360px) {
+        font-size: $font-size-xs;
+        padding: $space-1;
+      }
+
+      // Desktop: enhanced link
+      @media (min-width: $breakpoint-lg) {
+        font-size: $font-size-base;
+      }
+
+      &:hover {
+        color: $brand-primary;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: $shadow-focus;
+      }
+    }
+  }
+
+  // Primary button
+  .btn-primary {
+    width: 100%;
+    padding: $space-4 $space-6;
+    background-color: $brand-primary;
+    color: $color-white;
+    border: none;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    font-family: $font-family-primary;
+    cursor: pointer;
+    transition: all $transition-fast;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-appearance: none;
+    appearance: none;
+
+    // Small mobile: compact button
+    @media (max-width: 360px) {
+      padding: $space-3 $space-4;
+      font-size: $font-size-sm;
+      min-height: 44px;
+    }
+
+    // Mobile landscape: compact button
+    @media (max-height: 600px) and (orientation: landscape) {
+      padding: $space-3 $space-4;
+      min-height: 44px;
+    }
+
+    // Tablet: enhanced button
+    @media (min-width: $breakpoint-sm) {
+      padding: $space-5 $space-8;
+      border-radius: $radius-lg;
+      min-height: 52px;
+    }
+
+    // Desktop: premium button
+    @media (min-width: $breakpoint-lg) {
+      padding: $space-6 $space-10;
+      font-size: $font-size-lg;
+      min-height: 56px;
+    }
+
+    // Large desktop: maximum button
+    @media (min-width: $breakpoint-xl) {
+      padding: $space-8 $space-12;
+      font-size: $font-size-xl;
+      min-height: 60px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: $brand-primary-dark;
+      
+      // Only transform on larger screens
+      @media (min-width: $breakpoint-sm) {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+    }
+
+    &:active:not(:disabled) {
+      @media (min-width: $breakpoint-sm) {
+        transform: translateY(-1px);
+        box-shadow: $shadow-base;
+      }
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $shadow-focus;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+// ============================================================================
+// TERMS & POLICY SECTION - SIGNUP PAGE
+// ============================================================================
+
+.terms-policy {
+  margin-top: $space-4;
+  text-align: center;
+  color: $text-tertiary;
+  font-size: $font-size-xs;
+  line-height: $line-height-relaxed;
+
+  // Small mobile: extra compact
+  @media (max-width: 360px) {
+    margin-top: $space-3;
+    font-size: 10px;
+  }
+
+  // Mobile landscape: compact
+  @media (max-height: 600px) and (orientation: landscape) {
+    margin-top: $space-2;
+  }
+
+  // Tablet: enhanced
+  @media (min-width: $breakpoint-sm) {
+    margin-top: $space-5;
+    font-size: $font-size-sm;
+  }
+
+  // Desktop: premium
+  @media (min-width: $breakpoint-lg) {
+    margin-top: $space-6;
+    font-size: $font-size-base;
+  }
+
+  a {
+    color: $brand-primary-light;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: $brand-primary;
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $shadow-focus;
+      border-radius: $radius-sm;
+      padding: 1px 2px;
+    }
+  }
+}
+
+// ============================================================================
+// TOGGLE AUTH SECTION - BOTTOM LINKS
+// ============================================================================
+
+.toggle-auth {
+  margin-top: $space-6;
+  text-align: center;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+
+  // Small mobile: compact spacing
+  @media (max-width: 360px) {
+    margin-top: $space-4;
+    font-size: $font-size-xs;
+  }
+
+  // Mobile landscape: compact spacing
+  @media (max-height: 600px) and (orientation: landscape) {
+    margin-top: $space-3;
+  }
+
+  // Tablet: enhanced spacing
+  @media (min-width: $breakpoint-sm) {
+    margin-top: $space-8;
+    font-size: $font-size-base;
+  }
+
+  // Desktop: premium spacing
+  @media (min-width: $breakpoint-lg) {
+    margin-top: $space-10;
+    font-size: $font-size-lg;
+  }
+
+  .toggle-button {
+    color: $brand-primary-light;
+    text-decoration: none;
+    font-weight: $font-weight-semibold;
+    margin-left: $space-2;
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: $brand-primary;
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $shadow-focus;
+    }
+  }
+}
+
+// ============================================================================
+// ERROR MESSAGE STYLING
+// ============================================================================
+
+.login-form-card form div[style*="color: red"] {
+  background-color: $status-error-bg !important;
+  border: 1px solid $status-error-border !important;
+  color: $status-error !important;
+  padding: $space-3 $space-4 !important;
+  border-radius: $radius-md !important;
+  margin: $space-4 0 !important;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  // Tablet: enhanced error styling
+  @media (min-width: $breakpoint-sm) {
+    padding: $space-4 $space-5 !important;
+    border-radius: $radius-lg !important;
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================================================
+// ANIMATIONS & ACCESSIBILITY
+// ============================================================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-form-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .login-form-card,
+  .login-form-card form input,
+  .login-form-card form .btn-primary,
+  .forgot-password-link,
+  .toggle-button {
+    animation: none;
+    transition: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .login-form-card {
+    border-width: 2px;
+    border-color: $text-primary;
+  }
+
+  .login-form-card form input {
+    border-width: 2px;
+  }
+
+  .login-form-card form .btn-primary {
+    border: 2px solid $brand-primary;
+  }
+}
+
+// ============================================================================
+// PRINT STYLES
+// ============================================================================
+
+@media print {
+  .login-page-container {
+    background: white;
+    box-shadow: none;
+  }
+
+  .login-form-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+} 

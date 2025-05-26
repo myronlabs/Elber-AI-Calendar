@@ -1,0 +1,71 @@
+// Site layout styles
+@use '../abstracts/variables' as *;
+
+/* Layout styles */
+.site-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  width: 100%; 
+  min-height: 0; // Ensure it doesn't overflow #root
+  overflow-x: hidden; // Prevent horizontal scroll
+  
+  // Special handling for assistant page - it has its own scroll container
+  &:has(.assistant-page) {
+    overflow-y: hidden; // Disable site-level scroll when assistant page handles it
+  }
+}
+
+.main-content {
+  flex: 1; // Takes available vertical space
+  overflow-y: auto; // Main scroll container extends to viewport edges
+  overflow-x: hidden; // Prevent horizontal scroll
+  min-height: 0; // Crucial for scrollable flex children
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  // Content wrapper for padding and centering
+  .content-wrapper {
+    padding: $spacer * 1.3 $spacer * 2;
+    max-width: 1400px; // Constrain maximum width for better readability
+    margin: 0 auto; // Center the content
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    // Tablet: reduce padding for centered layout
+    @media (min-width: $breakpoint-md) {
+      padding: $spacer * 1.5 $spacer * 3;
+      max-width: 1200px;
+    }
+
+    // Desktop: comfortable max width
+    @media (min-width: $breakpoint-lg) {
+      padding: $spacer * 2 $spacer * 4;
+      max-width: 1400px;
+    }
+
+    // Remove padding on mobile for Assistant page
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      &:has(.assistant-page) {
+        padding: 0;
+      }
+    }
+
+    // Remove padding on mobile for Calendar page to avoid gray bar
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      &:has(.calendar-page) {
+        padding: 0;
+      }
+    }
+
+    // Reduced padding on small screens for Assistant page
+    @media (min-width: $breakpoint-sm) and (max-width: #{$breakpoint-md - 1px}) {
+      &:has(.assistant-page) {
+        padding: $spacer * 0.5 $spacer * 0.5;
+      }
+    }
+  }
+} 

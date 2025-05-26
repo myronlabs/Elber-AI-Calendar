@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "stdio",
+      "command": "/home/jman/.nvm/versions/node/v20.19.1/bin/node",
+      "args": [
+        "/home/jman/.nvm/versions/node/v20.19.1/lib/node_modules/@supabase/mcp-server-supabase/dist/stdio.js",
+        "--access-token",
+        "sbp_89b3cc89b2085bfbf56f207401eb0761a8c747be"
+      ],
+      "env": {}
+    }
+  }
+}

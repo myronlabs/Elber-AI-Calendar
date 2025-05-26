@@ -1,0 +1,35 @@
+// Base typography styles
+@use '../abstracts/variables' as *;
+@use 'sass:color';
+
+// Base link styles
+a {
+  color: $primary-accent;
+  text-decoration: none;
+
+  &:hover {
+    color: color.adjust($primary-accent, $lightness: 15%);
+    text-decoration: underline;
+  }
+}
+
+// Scrollbar styles
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $dark-theme-card-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $primary-accent;
+  border-radius: 20px;
+  border: 3px solid $dark-theme-card-bg;
+}
+
+// Tooltip styles
+.tooltip-custom {
+  border-left-color: $primary-accent;
+  border-top-color: $primary-accent;
+} 

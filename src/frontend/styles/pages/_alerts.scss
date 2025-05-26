@@ -1,0 +1,787 @@
+// ============================================================================
+// ULTRA-PREMIUM ALERTS PAGE - GLASSMORPHIC EXCELLENCE
+// High-end alerts interface with ethereal glass effects and smooth animations
+// ============================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// ALERTS PAGE - MOBILE FIRST RESPONSIVE
+// ============================================================================
+
+.alerts-page {
+  min-height: 0;
+  background-color: $surface-background;
+  padding: $space-3; // Mobile first
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: $content-max-width-default; // Use consistent max width
+  margin: 0 auto; // Center the content
+  
+  // Global text rendering improvements - moved before media query
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  
+  // Large desktop: slightly narrower for optimal reading
+  @media (min-width: $breakpoint-xl) {
+    max-width: $content-max-width-narrow;
+  }
+  
+  // Ensure all text has proper rendering
+  * {
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    text-rendering: inherit;
+  }
+  
+  // Removed lens flare animation for better performance
+
+  // Tablet and up: enhanced spacing
+  @media (min-width: $breakpoint-md) {
+    padding: $space-6;
+  }
+
+  // Desktop: maximum spacing
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-8;
+  }
+}
+
+// ============================================================================
+// ALERTS HEADER - FLOATING GLASS HEADER
+// ============================================================================
+
+.alerts-header {
+  margin-bottom: $space-6;
+  padding: $space-5;
+  background: rgba(255, 255, 255, $opacity-glass-subtle);
+  backdrop-filter: blur($blur-md);
+  border-radius: $radius-lg;
+  border: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  
+  // Improve text rendering quality
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  will-change: transform;
+
+  @media (min-width: $breakpoint-md) {
+    margin-bottom: $space-6;
+    padding: $space-6;
+  }
+  
+  h1 {
+    color: $text-primary;
+    font-size: $font-size-xl; // Mobile first
+    font-weight: $font-weight-bold;
+    margin: 0;
+    letter-spacing: -0.025em;
+    text-align: center;
+
+    // Tablet and up: larger header
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .header-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-3;
+    width: 100%;
+
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .timezone-info {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-2;
+      color: $text-primary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, 
+        rgba($brand-primary, 0.12) 0%, 
+        rgba($brand-primary, 0.08) 100%
+      );
+      padding: $space-2 $space-4;
+      border-radius: $radius-lg;
+      border: 1px solid rgba($brand-primary, 0.2);
+      box-shadow: $shadow-glass-sm, 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      backdrop-filter: blur($blur-sm);
+      position: relative;
+      overflow: hidden;
+      
+      // Premium shimmer effect
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.15) 50%,
+          transparent 100%
+        );
+        animation: shimmer 3s ease-in-out infinite;
+        pointer-events: none;
+      }
+      
+      // Icon styling
+      .timezone-icon {
+        font-size: $font-size-base;
+        margin-right: $space-1;
+        display: inline-flex;
+        align-items: center;
+      }
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-base;
+        padding: $space-3 $space-5;
+        
+        .timezone-icon {
+          font-size: $font-size-lg;
+        }
+      }
+    }
+  }
+
+  .header-controls {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    align-items: center;
+
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+
+    .filter-chip {
+      padding: $space-1 $space-3;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: $text-secondary;
+      font-size: $font-size-xs; // Mobile first
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all $transition-base;
+      position: relative;
+      overflow: hidden;
+
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-sm;
+        padding: $space-2 $space-4;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba($brand-primary, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.4s, height 0.4s;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: $text-primary;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        &::before {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      &.active {
+        background: linear-gradient(135deg, $brand-primary, rgba($brand-primary, 0.8));
+        color: $color-white;
+        border-color: transparent;
+        box-shadow: 
+          0 4px 16px rgba($brand-primary, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}
+
+// ============================================================================
+// FILTERS SECTION - SEARCH AND FILTER CONTROLS
+// ============================================================================
+
+.alerts-filters {
+  margin-bottom: $space-8; // Increased spacing to prevent overlap with alerts
+  padding: $space-4;
+  background: rgba(255, 255, 255, $opacity-glass-subtle);
+  backdrop-filter: blur($blur-md);
+  border-radius: $radius-lg;
+  border: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+  
+  @media (min-width: $breakpoint-md) {
+    padding: $space-5;
+    margin-bottom: $space-10; // Even more spacing on larger screens
+  }
+  
+  // Search bar removed since it's in filter-group
+  
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    margin-bottom: $space-4;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      font-size: $font-size-base;  // Increased from sm
+      font-weight: $font-weight-semibold;  // Increased from medium
+      color: $text-primary;  // Changed from secondary for better visibility
+      min-width: 100px;  // Increased from 80px
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-lg;  // Even larger on desktop
+        min-width: 120px;
+      }
+    }
+    
+    input[type="text"],
+    .search-input {
+      flex: 1;
+      padding: $space-3 $space-4;  // Increased padding
+      background: rgba(255, 255, 255, $opacity-glass-light);
+      border: 1px solid rgba(255, 255, 255, $opacity-glass-muted);
+      border-radius: $radius-md;
+      color: $text-primary;
+      font-size: $font-size-base;  // Increased from sm
+      font-weight: $font-weight-medium;
+      transition: all $transition-base;
+      min-height: 44px;  // Ensure touch-friendly height
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-lg;
+        padding: $space-4 $space-5;
+        min-height: 48px;
+      }
+      
+      &::placeholder {
+        color: $text-tertiary;
+        font-size: $font-size-base;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $brand-primary;
+        background: rgba(255, 255, 255, $opacity-glass-medium);
+        box-shadow: 0 0 0 3px rgba($brand-primary, 0.25);
+      }
+    }
+    
+    select {
+      flex: 1;
+      padding: $space-3 $space-4;  // Increased padding
+      background: rgba(255, 255, 255, $opacity-glass-light);
+      border: 1px solid rgba(255, 255, 255, $opacity-glass-muted);
+      border-radius: $radius-md;
+      color: $text-primary;
+      font-size: $font-size-base;  // Increased from sm
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all $transition-base;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right $space-3 center;
+      background-size: 24px;  // Increased icon size
+      padding-right: $space-12;
+      min-height: 44px;  // Ensure touch-friendly height
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-lg;
+        padding: $space-4 $space-5;
+        padding-right: 60px;
+        min-height: 48px;
+      }
+      
+      &:hover {
+        border-color: rgba(255, 255, 255, $opacity-glass-dense);
+        background-color: rgba(255, 255, 255, $opacity-glass-medium);
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $brand-primary;
+        box-shadow: 0 0 0 3px rgba($brand-primary, 0.25);
+      }
+      
+      option {
+        background: $surface-primary;
+        color: $text-primary;
+        font-size: $font-size-base;
+        padding: $space-2;
+      }
+    }
+  }
+  
+  // Mobile: Stack filters vertically
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    .filter-group {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $space-2;
+      
+      label {
+        text-align: left;
+        margin-bottom: $space-2;
+      }
+      
+      input[type="text"],
+      .search-input,
+      select {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ALERTS LIST - MAIN CONTENT AREA
+// ============================================================================
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-top: $space-8; // Add proper spacing from filters section
+  
+  @media (min-width: $breakpoint-md) {
+    margin-top: $space-10; // Increase spacing on larger screens
+  }
+}
+
+.alert-card {
+  background: rgba(255, 255, 255, $opacity-glass-base);
+  backdrop-filter: blur($blur-md);
+  border: 1px solid rgba(255, 255, 255, $opacity-glass-muted);
+  border-radius: $radius-lg;
+  padding: $space-4;
+  transition: all $transition-fast;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: $space-1;
+    background: var(--alert-color, $brand-primary);
+    transition: width $transition-fast;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, $opacity-glass-medium);
+    border-color: rgba(255, 255, 255, $opacity-glass-dense);
+    transform: translateY(-$space-1);
+    box-shadow: $shadow-glass-lg;
+
+    &::before {
+      width: $space-2;
+    }
+  }
+
+  // Priority variants
+  &.priority-high {
+    --alert-color: #{$status-error};
+  }
+
+  &.priority-medium {
+    --alert-color: #{$status-warning};
+  }
+
+  &.priority-low {
+    --alert-color: #{$status-success};
+  }
+
+  .alert-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-3;
+    margin-bottom: $space-3;
+
+    .alert-title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      margin: 0;
+      flex: 1;
+    }
+
+    .alert-priority {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-1;
+      padding: $space-1 $space-2;
+      border-radius: $radius-sm;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--alert-color);
+      color: $color-white;
+    }
+  }
+  
+  .alert-badges {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    
+    .priority-badge,
+    .status-badge,
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: $space-1 $space-2;
+      border-radius: $radius-sm;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba($brand-primary, 0.1);
+      color: $brand-primary;
+      border: 1px solid rgba($brand-primary, 0.2);
+      
+      @media (min-width: $breakpoint-md) {
+        padding: $space-1 $space-3;
+      }
+    }
+  }
+  
+  .alert-description {
+    color: $text-secondary;
+    line-height: 1.6;
+    margin: $space-3 0;
+  }
+  
+  .alert-timing {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    margin: $space-3 0;
+    font-size: $font-size-sm;
+    
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      gap: $space-4;
+    }
+    
+    .due-date {
+      color: $text-secondary;
+      
+      strong {
+        color: $text-primary;
+        font-weight: $font-weight-medium;
+      }
+    }
+    
+    .relative-time {
+      color: $text-tertiary;
+      font-style: italic;
+    }
+  }
+  
+  .alert-tags {
+    display: flex;
+    gap: $space-2;
+    flex-wrap: wrap;
+    margin: $space-3 0;
+    
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: $space-1 $space-2;
+      background: rgba($brand-primary, 0.05);
+      border: 1px solid rgba($brand-primary, 0.1);
+      border-radius: $radius-sm;
+      font-size: $font-size-xs;
+      color: $text-secondary;
+    }
+  }
+
+  .alert-content {
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: $space-3;
+  }
+
+  .alert-meta {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    font-size: $font-size-sm;
+    color: $text-tertiary;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: $space-1;
+
+      svg {
+        width: $space-4;
+        height: $space-4;
+      }
+    }
+  }
+
+  .alert-actions {
+    display: flex;
+    gap: $space-2;
+    margin-top: $space-4;
+    padding-top: $space-4;
+    border-top: 1px solid rgba(255, 255, 255, $opacity-glass-subtle);
+
+    button {
+      padding: $space-2 $space-4;
+      border-radius: $radius-base;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all $transition-fast;
+      
+      &.btn-primary {
+        background: $brand-primary;
+        color: $color-white;
+        border: none;
+
+        &:hover {
+          background: color.adjust($brand-primary, $lightness: -10%);
+          box-shadow: $shadow-glass-sm;
+        }
+      }
+
+      &.btn-secondary {
+        background: transparent;
+        color: $text-secondary;
+        border: 1px solid rgba(255, 255, 255, $opacity-glass-muted);
+
+        &:hover {
+          background: rgba(255, 255, 255, $opacity-glass-light);
+          border-color: rgba(255, 255, 255, $opacity-glass-dense);
+          color: $text-primary;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// EMPTY STATE
+// ============================================================================
+
+.alerts-empty {
+  text-align: center;
+  padding: $space-12 $space-4;
+
+  .empty-icon {
+    width: $space-16;
+    height: $space-16;
+    margin: 0 auto $space-6;
+    color: $text-tertiary;
+    opacity: 0.5;
+  }
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    font-size: $font-size-base;
+    color: $text-secondary;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+// ============================================================================
+// LOADING STATE
+// ============================================================================
+
+.alerts-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: $space-4;
+
+  .loading-spinner {
+    width: $space-12;
+    height: $space-12;
+    border: $space-1 solid $border-subtle;
+    border-top-color: $brand-primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .loading-text {
+    color: $text-secondary;
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY($space-4);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+// Shimmer animation removed for better performance
+
+// Float animation removed for better performance
+
+.alert-card {
+  animation: fadeIn 0.3s ease-out;
+  animation-fill-mode: both;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
+}
+
+// ============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// ============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .alert-card,
+  .loading-spinner {
+    animation: none;
+  }
+
+  .alert-card,
+  .filter-chip,
+  button {
+    transition: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .alert-card {
+    border-width: $space-1;
+  }
+
+  .alert-priority {
+    outline: $space-1 solid currentColor;
+    outline-offset: $space-1;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE LAYOUT
+// ============================================================================
+
+// Tablet (768px and up)
+@media (min-width: $breakpoint-md) {
+  .alert-card {
+    padding: $space-6;
+
+    .alert-header {
+      .alert-title {
+        font-size: $font-size-xl;
+      }
+
+      .alert-priority {
+        font-size: $font-size-sm;
+        padding: $space-1 $space-3;
+      }
+    }
+
+    .alert-content {
+      font-size: $font-size-base;
+    }
+
+    .alert-actions {
+      button {
+        padding: $space-2 $space-6;
+        font-size: $font-size-base;
+      }
+    }
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: $breakpoint-lg) {
+  .alerts-page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .alerts-list {
+    gap: $space-6;
+  }
+}

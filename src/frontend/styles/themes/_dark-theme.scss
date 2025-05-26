@@ -1,0 +1,456 @@
+// ============================================================================
+// ENTERPRISE DARK THEME - SALESFORCE LIGHTNING COMPETITOR
+// Premium CRM styling that rivals enterprise-grade design systems
+// ============================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// GLOBAL FOUNDATION - ENTERPRISE DARK BASE
+// ============================================================================
+
+body {
+  background-color: $surface-background;
+  color: $text-primary;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================================================
+// SURFACE SYSTEM - PROFESSIONAL LAYERING
+// ============================================================================
+
+.card,
+.panel,
+.surface-primary {
+  @include glass-card;
+}
+
+.surface-secondary,
+.elevated-card {
+  @include glass-surface(0.06, 20px);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-base;
+}
+
+.surface-tertiary,
+.modal-content {
+  @include glass-surface(0.08, 25px);
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+}
+
+// ============================================================================
+// BUTTON SYSTEM - ENTERPRISE GRADE
+// ============================================================================
+
+.btn,
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  border: 1px solid transparent;
+  border-radius: $radius-base;
+  font-family: $font-family-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  min-height: $button-height-base;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $shadow-focus;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Primary Button - Brand Blue
+.btn-primary,
+.button-primary {
+  @include glass-button-primary;
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+}
+
+// Secondary Button - Neutral
+.btn-secondary,
+.button-secondary {
+  @include glass-button;
+  color: $text-secondary;
+
+  &:hover:not(:disabled) {
+    color: $text-primary;
+  }
+}
+
+// Danger Button - Error Red
+.btn-danger,
+.button-danger {
+  background-color: $status-error;
+  color: $color-white;
+  border-color: $status-error;
+  
+  &:hover:not(:disabled) {
+    background-color: color.adjust($status-error, $lightness: -10%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-base;
+  }
+  
+  &:focus-visible {
+    box-shadow: $shadow-focus-error;
+  }
+}
+
+// Success Button - Success Green
+.btn-success,
+.button-success {
+  background-color: $status-success;
+  color: $color-white;
+  border-color: $status-success;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($status-success, $lightness: -10%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-base;
+  }
+}
+
+// ============================================================================
+// FORM SYSTEM - PROFESSIONAL INPUTS
+// ============================================================================
+
+.form-control,
+.input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: $space-3 $space-4;
+  color: $text-primary;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  min-height: $input-height-base;
+  @include glass-input;
+  
+  &::placeholder {
+    color: $text-tertiary;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &.error,
+  &:invalid {
+    border-color: $status-error;
+    box-shadow: 0 0 0 4px rgba($status-error, 0.15);
+  }
+}
+
+.form-label,
+.label {
+  display: block;
+  margin-bottom: $space-2;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+// ============================================================================
+// TABLE SYSTEM - ENTERPRISE DATA DISPLAY
+// ============================================================================
+
+.table,
+table {
+  width: 100%;
+  background-color: $surface-primary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  
+  thead {
+    background-color: $surface-secondary;
+    
+    th {
+      padding: $space-4 $space-6;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid $border-primary;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $border-subtle;
+      transition: background-color $transition-fast;
+
+      &:hover {
+        background-color: $surface-secondary;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: $space-4 $space-6;
+      color: $text-primary;
+      font-size: $font-size-base;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ============================================================================
+// MODAL SYSTEM - ENTERPRISE OVERLAYS
+// ============================================================================
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include glass-modal-overlay;
+  z-index: $z-modal-backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+}
+
+.modal-content {
+  background-color: $surface-tertiary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-xl;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: $space-6;
+  border-bottom: 1px solid $border-primary;
+  background-color: $surface-secondary;
+
+  h2, h3 {
+    margin: 0;
+    color: $text-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.modal-body {
+  padding: $space-6;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: $space-6;
+  border-top: 1px solid $border-primary;
+  background-color: $surface-secondary;
+  display: flex;
+  gap: $space-3;
+  justify-content: flex-end;
+}
+
+// ============================================================================
+// NAVIGATION SYSTEM - PROFESSIONAL NAVIGATION
+// ============================================================================
+
+.nav,
+.navigation {
+  display: flex;
+  gap: $space-2;
+
+  .nav-item,
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: $space-3 $space-4;
+    color: $text-secondary;
+    text-decoration: none;
+    border-radius: $radius-base;
+    font-weight: $font-weight-medium;
+    transition: all $transition-fast;
+    
+    &:hover {
+      color: $text-primary;
+      background-color: $surface-secondary;
+    }
+
+    &.active,
+    &.current {
+      color: $brand-primary-light;
+      background-color: $brand-primary-subtle;
+      border: 1px solid rgba(1, 118, 211, 0.3);
+    }
+  }
+}
+
+// ============================================================================
+// STATUS & ALERT SYSTEM - ENTERPRISE MESSAGING
+// ============================================================================
+
+.alert {
+  padding: $space-4;
+  border-radius: $radius-lg;
+  border-left: 4px solid;
+  margin-bottom: $space-4;
+
+  &.alert-success {
+    background-color: $status-success-bg;
+    border-left-color: $status-success;
+    color: $text-primary;
+  }
+
+  &.alert-warning {
+    background-color: $status-warning-bg;
+    border-left-color: $status-warning;
+    color: $text-primary;
+  }
+
+  &.alert-error,
+  &.alert-danger {
+    background-color: $status-error-bg;
+    border-left-color: $status-error;
+    color: $text-primary;
+  }
+
+  &.alert-info {
+    background-color: $status-info-bg;
+    border-left-color: $status-info;
+    color: $text-primary;
+  }
+}
+
+// ============================================================================
+// LOADING & SPINNER SYSTEM
+// ============================================================================
+
+.spinner,
+.loading-indicator {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid $border-primary;
+  border-top-color: $brand-primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================================================
+// SCROLLBAR SYSTEM - PROFESSIONAL SCROLLBARS
+// ============================================================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $surface-background;
+  border-radius: $radius-base;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-secondary;
+  border-radius: $radius-base;
+  
+  &:hover {
+    background: $surface-interactive;
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: $surface-background;
+}
+
+// ============================================================================
+// FOCUS & ACCESSIBILITY - ENTERPRISE STANDARDS
+// ============================================================================
+
+*:focus-visible {
+  outline: none;
+  box-shadow: $shadow-focus;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ============================================================================
+// UTILITY CLASSES - ENTERPRISE HELPERS
+// ============================================================================
+
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-tertiary { color: $text-tertiary; }
+.text-success { color: $status-success; }
+.text-warning { color: $status-warning; }
+.text-error { color: $status-error; }
+.text-info { color: $brand-primary; }
+
+.bg-primary { background-color: $surface-primary; }
+.bg-secondary { background-color: $surface-secondary; }
+.bg-tertiary { background-color: $surface-tertiary; }
+
+.border-primary { border-color: $border-primary; }
+.border-secondary { border-color: $border-secondary; }
+.border-focus { border-color: $border-focus; }
+
+.shadow-sm { box-shadow: $shadow-sm; }
+.shadow-base { box-shadow: $shadow-base; }
+.shadow-lg { box-shadow: $shadow-lg; }

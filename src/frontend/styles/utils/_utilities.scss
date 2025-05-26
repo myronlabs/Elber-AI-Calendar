@@ -1,0 +1,90 @@
+// Utility classes
+@use '../abstracts/variables' as *;
+
+/* Loading states */
+.page-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: $dark-theme-page-bg;
+  color: $text-color-light;
+
+  p {
+    margin-top: 1rem;
+    font-size: $font-size-base;
+  }
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: $loader-spinner-border-width solid $loader-track-color;
+    border-bottom-color: $primary-accent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+/* Page loader overlay for full page loading */
+.page-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $dark-theme-page-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.page-loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: $loader-spinner-border-width solid $loader-track-color;
+  border-left-color: $primary-accent;
+  border-top-color: $primary-accent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Add this class to an element to give it the accent border bottom for active states */
+.accent-border-bottom-active {
+  border-bottom: $thick-border-width solid $primary-accent;
+}
+
+/* Thinking indicator dots */
+.thinking-indicator-dots {
+  text-align: center;
+  padding: $spacer-3;
+  margin: $spacer-1 auto;
+  width: fit-content;
+  position: relative;
+  z-index: 2;
+
+  span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 $spacer-1;
+    background-color: $thinking-dots-color;
+    border-radius: 50%;
+    animation: dotPulse 1.4s infinite ease-in-out both;
+    box-shadow: 0 0 6px rgba($thinking-dots-color, 0.6);
+    transform-origin: center;
+    will-change: transform, opacity;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+} 

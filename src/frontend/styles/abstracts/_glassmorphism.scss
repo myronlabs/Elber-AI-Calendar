@@ -1,0 +1,105 @@
+// ============================================================================
+// GLASSMORPHISM SYSTEM - CONSISTENT GLASS EFFECTS
+// Centralized glassmorphic mixins for consistent application
+// ============================================================================
+
+@use 'variables' as *;
+
+// Base glassmorphic effect
+@mixin glass-surface($opacity: 0.04, $blur: 20px) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+// Hover state for glass surfaces
+@mixin glass-surface-hover($opacity: 0.08, $blur: 20px) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+// Glassmorphic card
+@mixin glass-card {
+  @include glass-surface(0.04, 20px);
+  border-radius: $radius-xl;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: all $transition-base;
+  
+  &:hover {
+    @include glass-surface-hover(0.08, 20px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Glassmorphic input
+@mixin glass-input {
+  @include glass-surface(0.05, 10px);
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
+  
+  &:focus {
+    @include glass-surface-hover(0.08, 10px);
+    border-color: rgba($brand-primary, 0.5);
+    box-shadow: 0 0 0 4px rgba($brand-primary, 0.15);
+  }
+}
+
+// Glassmorphic button
+@mixin glass-button {
+  @include glass-surface(0.06, 10px);
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+  
+  &:hover:not(:disabled) {
+    @include glass-surface-hover(0.1, 10px);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Glassmorphic primary button
+@mixin glass-button-primary {
+  background: linear-gradient(135deg, $brand-primary, rgba($brand-primary, 0.85));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: $color-white;
+  transition: all $transition-fast;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $brand-primary-light, $brand-primary);
+    box-shadow: 0 8px 24px rgba($brand-primary, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+// Glassmorphic modal overlay
+@mixin glass-modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+// Glassmorphic sidebar item
+@mixin glass-sidebar-item {
+  @include glass-surface(0, 0);
+  transition: all $transition-fast;
+  
+  &:hover {
+    @include glass-surface(0.06, 10px);
+  }
+  
+  &.active {
+    background: rgba($brand-primary, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 4px solid $brand-primary;
+  }
+}

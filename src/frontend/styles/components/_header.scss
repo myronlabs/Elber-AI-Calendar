@@ -1,0 +1,331 @@
+// ============================================================================
+// ENTERPRISE HEADER COMPONENT - SALESFORCE LIGHTNING LEVEL
+// Mobile-first professional CRM header that rivals enterprise design systems
+// ============================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // Mobile first: compact padding
+  padding: $space-3 $space-4;
+  background-color: $surface-primary;
+  border-bottom: 1px solid $border-primary;
+  box-shadow: $shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  min-height: $header-height;
+  backdrop-filter: blur(8px);
+
+  // Tablet and up: increased padding
+  @media (min-width: $breakpoint-md) {
+    padding: $space-4 $space-6;
+  }
+
+  // Large desktop: maximum padding
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-4 $space-8;
+  }
+
+  &__logo {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $brand-primary;
+    text-decoration: none;
+    transition: all $transition-fast;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 20px rgba($brand-primary-glow, 0.5);
+
+    &:hover {
+      color: $brand-primary-light;
+      transform: translateY(-1px);
+      text-shadow: 0 0 30px rgba($brand-primary-glow, 0.7);
+    }
+
+    // Tablet and up: larger logo
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__hamburger-menu {
+    // Mobile first: show hamburger by default
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: $z-fixed;
+    transition: all $transition-fast;
+
+    // Tablet and up: hide hamburger
+    @media (min-width: $breakpoint-md) {
+      display: none;
+    }
+
+    span {
+      width: 100%;
+      height: 2px;
+      background-color: $text-primary;
+      transition: all $transition-base;
+      transform-origin: center;
+      border-radius: 1px;
+    }
+
+    &:hover span {
+      background-color: $brand-primary;
+    }
+
+    &.is-active {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background-color: $brand-primary;
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+        background-color: $brand-primary;
+      }
+    }
+  }
+
+  &__nav {
+    // Mobile first: slide-out navigation panel
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(320px, 85vw);
+    height: 100vh;
+    background-color: $surface-secondary;
+    border-left: 1px solid $border-primary;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: $space-8 $space-6 $space-6;
+    box-shadow: $shadow-xl;
+    transform: translateX(100%);
+    transition: transform $transition-slow;
+    z-index: $z-modal;
+    gap: $space-2;
+    backdrop-filter: blur(12px);
+
+    // Tablet and up: horizontal navigation
+    @media (min-width: $breakpoint-md) {
+      position: static;
+      right: auto;
+      width: auto;
+      height: auto;
+      background-color: transparent;
+      border: none;
+      flex-direction: row;
+      align-items: center;
+      padding: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      gap: $space-3;
+      transform: none;
+    }
+
+    // Large desktop: increased spacing
+    @media (min-width: $breakpoint-lg) {
+      gap: $space-4;
+    }
+
+    &--mobile-open {
+      transform: translateX(0);
+
+      // Tablet and up: no special mobile state
+      @media (min-width: $breakpoint-md) {
+        transform: none;
+      }
+    }
+  }
+
+  &__nav-link {
+    color: $text-primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
+    // Mobile first: full-width touch-friendly links
+    padding: $space-4 $space-5;
+    border-radius: $radius-lg;
+    text-align: left;
+    width: 100%;
+    transition: all $transition-fast;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    // Tablet and up: compact horizontal links
+    @media (min-width: $breakpoint-md) {
+      padding: $space-3 $space-4;
+      text-align: center;
+      width: auto;
+      border-radius: $radius-base;
+      font-size: $font-size-sm;
+    }
+
+    &:hover {
+      background-color: $brand-primary-subtle;
+      color: $brand-primary-light;
+      transform: translateX(4px);
+
+      // Tablet and up: different hover effect
+      @media (min-width: $breakpoint-md) {
+        transform: translateY(-2px);
+        box-shadow: $shadow-sm;
+      }
+    }
+
+    &--active {
+      color: $brand-primary-light;
+      background-color: $brand-primary-subtle;
+      border: 1px solid rgba(1, 118, 211, 0.3);
+      font-weight: $font-weight-semibold;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60%;
+        background-color: $brand-primary;
+        border-radius: 0 2px 2px 0;
+
+        // Tablet and up: bottom border instead
+        @media (min-width: $breakpoint-md) {
+          left: 50%;
+          top: auto;
+          bottom: -1px;
+          transform: translateX(-50%);
+          width: 80%;
+          height: 2px;
+          border-radius: 1px 1px 0 0;
+        }
+      }
+    }
+  }
+
+  &__logout-btn {
+    background-color: transparent;
+    border: 1px solid $border-primary;
+    color: $text-secondary;
+    // Mobile first: full-width button
+    padding: $space-4 $space-5;
+    border-radius: $radius-lg;
+    cursor: pointer;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
+    transition: all $transition-fast;
+    width: 100%;
+    text-align: left;
+    margin-top: $space-6;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    // Tablet and up: compact button
+    @media (min-width: $breakpoint-md) {
+      width: auto;
+      text-align: center;
+      margin-top: 0;
+      padding: $space-3 $space-4;
+      border-radius: $radius-base;
+      font-size: $font-size-sm;
+    }
+
+    &:hover {
+      background-color: $status-error-bg;
+      border-color: $status-error;
+      color: $status-error;
+      transform: translateX(4px);
+
+      // Tablet and up: different hover effect
+      @media (min-width: $breakpoint-md) {
+        transform: translateY(-2px);
+        box-shadow: $shadow-sm;
+      }
+    }
+
+    &:active {
+      transform: translateX(2px);
+
+      @media (min-width: $breakpoint-md) {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// Mobile navigation overlay
+.site-header__nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: $z-modal-backdrop;
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-base;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Hide on tablet and up
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+// Enterprise-grade focus states
+.site-header {
+  &__hamburger-menu:focus-visible {
+    outline: none;
+    box-shadow: $shadow-focus;
+    border-radius: $radius-sm;
+  }
+
+  &__nav-link:focus-visible {
+    outline: none;
+    box-shadow: $shadow-focus;
+  }
+
+  &__logout-btn:focus-visible {
+    outline: none;
+    box-shadow: $shadow-focus;
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    &__hamburger-menu span,
+    &__nav,
+    &__nav-link,
+    &__logout-btn {
+      transition: none;
+    }
+  }
+} 

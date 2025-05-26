@@ -1,0 +1,35 @@
+// PERFORMANCE-FIRST Global Styles
+// Minimal imports for maximum performance
+
+// 1. Core abstracts only
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// 2. Essential base styles only
+@use 'base/reset';
+@use 'base/typography';
+
+// 3. Core layout
+@use 'layouts/site-layout';
+
+// 4. Essential components only
+@use 'components/buttons';
+@use 'components/forms';
+@use 'components/modal';
+@use 'components/spinner';
+@use 'components/suggestion-bubbles';
+
+// 5. Core pages only
+@use 'pages/alerts';
+@use 'pages/assistant';
+@use 'pages/calendar';
+@use 'pages/contacts';
+@use 'pages/login';
+@use 'pages/form-page';
+@use 'pages/settings';
+
+// 6. Single optimized theme
+@use 'themes/dark-theme';
+
+// 7. Essential utilities
+@use 'utils/utilities';

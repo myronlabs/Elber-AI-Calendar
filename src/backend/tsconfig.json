@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "../../netlify/functions", // Output to netlify/functions
+    "rootDir": ".",                    // Keep the root directory as src/backend
+    "typeRoots": ["./node_modules/@types", "../../node_modules/@types"],
+    "baseUrl": ".",                    // Set the base URL for module resolution
+    "paths": {
+      "@services/*": ["services/*"],   // Create a path alias for services
+      "@types/*": ["types/*"],         // Create a path alias for types
+      "@utils/*": ["utils/*"],         // Create a path alias for utils
+      "@functions/*": ["functions/*"], // Create a path alias for functions
+      "@shared/*": ["functions/_shared/*"] // Create a path alias for shared modules
+    },
+    "sourceMap": true,                 // Generate source maps for debugging
+    "inlineSources": true,             // Include source code in source maps
+    "declaration": false,              // Don't generate .d.ts files
+    "preserveConstEnums": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "**/*.ts",                         // Include all TypeScript files
+    "functions/**/*.d.ts"              // Also include type declaration files explicitly
+, "../backend-backup/assistant-alerts.ts", "../backend-backup/assistant-calendar.ts", "../backend-backup/assistant-contacts.ts", "../backend-backup/assistant-fast.ts", "../backend-backup/assistant-general.ts", "../backend-backup/assistant-settings.ts"  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "scripts/**/*.js"
+  ]
+}

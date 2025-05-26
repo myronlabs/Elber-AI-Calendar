@@ -1,0 +1,107 @@
+// Import glassmorphism mixins first
+@forward 'glassmorphism';
+
+@use 'sass:color';
+@use 'variables' as *; // Ensure variables are available if mixins need them
+
+// Mixin to generate button variants (default, hover, active, focus, disabled)
+@mixin button-variant(
+  $background,
+  $color,
+  $border-color: $background,
+  $hover-background: if(color.channel($background, "lightness", $space: hsl) > 50, color.scale($background, $lightness: -10%), color.scale($background, $lightness: 20%)),
+  $hover-color: $color,
+  $hover-border-color: if(color.channel($border-color, "lightness", $space: hsl) > 50, color.scale($border-color, $lightness: -12%), color.scale($border-color, $lightness: 22%)),
+  $active-background: if(color.channel($background, "lightness", $space: hsl) > 50, color.scale($background, $lightness: -15%), color.scale($background, $lightness: 25%)),
+  $active-color: $color,
+  $active-border-color: if(color.channel($border-color, "lightness", $space: hsl) > 50, color.scale($border-color, $lightness: -17%), color.scale($border-color, $lightness: 27%)),
+  $disabled-background: color.adjust($background, $saturation: -30%, $lightness: if(color.channel($background, "lightness", $space: hsl) > 60, -5%, 5%)),
+  $disabled-color: color.adjust($color, $alpha: -0.5),
+  $disabled-border-color: color.adjust($border-color, $saturation: -30%, $lightness: if(color.channel($border-color, "lightness", $space: hsl) > 60, -5%, 5%))
+) {
+  color: $color;
+  background-color: $background;
+  border-color: $border-color;
+
+  &:hover:not(:disabled) {
+    color: $hover-color;
+    background-color: $hover-background;
+    border-color: $hover-border-color;
+  }
+
+  &:active:not(:disabled),
+  &.active:not(:disabled) {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-border-color;
+    // Optionally remove or adjust transform for active state if defined elsewhere
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    border-color: $disabled-border-color;
+    opacity: 0.65; // Consistent with global .btn:disabled
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Example of another common mixin (optional, can be expanded)
+@mixin visually-hidden {
+  position: absolute;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; // prevent line breaks from affecting layout
+} 
+
+// Standardized responsive breakpoints mixin - mobile-first approach (min-width)
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: $breakpoint-xs) { @content; }
+  } @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+// Breakpoint-down mixin to handle max-width queries consistently 
+@mixin breakpoint-down($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs - 1px}) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm - 1px}) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg - 1px}) { @content; }
+  } @else if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl - 1px}) { @content; }
+  }
+} 
+
+// Mobile-first responsive mixins
+@mixin mobile-only {
+  @media (max-width: #{$breakpoint-xs - 1px}) { @content; }
+}
+
+@mixin tablet-up {
+  @media (min-width: $breakpoint-xs) { @content; }
+}
+
+@mixin desktop-up {
+  @media (min-width: $breakpoint-md) { @content; }
+}
+
+@mixin large-desktop-up {
+  @media (min-width: $breakpoint-lg) { @content; }
+}
+
+ 

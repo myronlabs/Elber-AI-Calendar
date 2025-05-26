@@ -1,0 +1,707 @@
+// ============================================================================
+// ENTERPRISE SETTINGS PAGE - SALESFORCE LIGHTNING LEVEL
+// Professional settings page with sidebar navigation and content sections
+// ============================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// SETTINGS PAGE CONTAINER - MOBILE FIRST
+// ============================================================================
+
+.settings-page-container {
+  min-height: 0;
+  background: linear-gradient(180deg, 
+    $surface-background 0%, 
+    rgba(26, 21, 46, 0.95) 50%, 
+    $surface-background 100%
+  );
+  padding: $space-4;
+  max-width: 1200px; // Constrain maximum width
+  margin: 0 auto; // Center the content
+  width: 100%;
+
+  // Tablet and up: enhanced spacing
+  @media (min-width: $breakpoint-md) {
+    padding: $space-6;
+    max-width: 1000px;
+  }
+
+  // Desktop: maximum spacing
+  @media (min-width: $breakpoint-lg) {
+    padding: $space-8;
+    max-width: 1200px;
+  }
+}
+
+// ============================================================================
+// SETTINGS MAIN HEADER - ENTERPRISE STYLING
+// ============================================================================
+
+.settings-main-header {
+  margin-bottom: $space-6;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $border-subtle;
+
+  h1 {
+    color: $text-primary;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    margin: 0;
+    letter-spacing: -0.02em;
+
+    // Tablet and up: larger header
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-3xl;
+    }
+
+    // Desktop: maximum size
+    @media (min-width: $breakpoint-lg) {
+      font-size: $font-size-4xl;
+    }
+  }
+}
+
+// ============================================================================
+// SETTINGS LAYOUT - RESPONSIVE GRID
+// ============================================================================
+
+.settings-layout {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+
+  // Tablet and up: side-by-side layout
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    gap: $space-8;
+  }
+
+  // Desktop: enhanced spacing
+  @media (min-width: $breakpoint-lg) {
+    gap: $space-12;
+  }
+}
+
+// ============================================================================
+// SETTINGS SIDEBAR - ENTERPRISE NAVIGATION
+// ============================================================================
+
+.settings-sidebar {
+  flex-shrink: 0;
+  width: 100%;
+
+  // Tablet and up: fixed sidebar width
+  @media (min-width: $breakpoint-md) {
+    width: calc($space-10 * 7);
+  }
+
+  // Desktop: larger sidebar
+  @media (min-width: $breakpoint-lg) {
+    width: calc($space-10 * 8);
+  }
+
+  nav {
+    background: rgba(255, 255, 255, $opacity-glass-subtle);
+    backdrop-filter: blur($blur-lg);
+    border: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+    border-radius: $radius-xl;
+    box-shadow: $shadow-glass-lg;
+    overflow: hidden;
+    
+    // Mobile: Enhanced glassmorphic styling at top
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: $radius-lg;
+      box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      margin: 0 (-$space-2);
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        // Base styling - must come before nested rules
+        border-bottom: 1px solid $border-subtle;
+        transition: all $transition-fast;
+        padding: $space-4 $space-6;
+        cursor: pointer;
+        color: $text-secondary;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        display: block;
+        text-decoration: none;
+        user-select: none;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, $opacity-glass-light);
+          transform: translateX(2px);
+        }
+
+        &.active {
+          background: rgba($brand-primary, $opacity-glass-muted);
+          backdrop-filter: blur($blur-md);
+          border-right: $space-1 solid $brand-primary;
+          color: $brand-primary;
+          font-weight: $font-weight-semibold;
+
+          &:hover {
+            background: rgba($brand-primary, $opacity-glass-muted);
+            transform: none;
+          }
+        }
+
+        &:focus-visible {
+          outline: none;
+          box-shadow: inset 0 0 0 2px $brand-primary;
+        }
+
+        // Mobile: horizontal scroll navigation with snap
+        @media (max-width: #{$breakpoint-md - 1px}) {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: none;
+          border-right: 1px solid $border-subtle;
+          min-width: max-content;
+          padding: $space-3 $space-5;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+          white-space: nowrap;
+          flex-shrink: 0;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:last-child {
+            border-right: none;
+            padding-right: $space-6;
+          }
+
+          &.active {
+            border-right: 1px solid $border-subtle;
+            border-bottom: 3px solid $brand-primary;
+            background: rgba($brand-primary, 0.08);
+            color: $brand-primary;
+            font-weight: $font-weight-bold;
+          }
+        }
+
+        // Tablet and up: enhanced padding
+        @media (min-width: $breakpoint-md) {
+          padding: $space-5 $space-6;
+          font-size: $font-size-lg;
+        }
+      }
+    }
+
+    // Mobile: horizontal scrolling with snap points
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      ul {
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scroll-padding: $space-2;
+        gap: 0; // Remove gap to ensure proper snapping
+        
+        // Hide scrollbar but keep functionality
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        
+        // Add padding to show partial next item
+        padding: 0 $space-2;
+        
+        // Visual scroll indicators
+        &::before,
+        &::after {
+          content: '';
+          position: sticky;
+          width: $space-4;
+          height: 100%;
+          pointer-events: none;
+          z-index: 2;
+        }
+        
+        &::before {
+          left: 0;
+          background: linear-gradient(90deg, $surface-background 0%, transparent 100%);
+        }
+        
+        &::after {
+          right: 0;
+          background: linear-gradient(270deg, $surface-background 0%, transparent 100%);
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SETTINGS CONTENT AREA - MAIN CONTENT
+// ============================================================================
+
+.settings-content-area {
+  flex: 1;
+  min-width: 0; // Prevent flex item overflow
+
+  .card {
+    background: rgba(255, 255, 255, $opacity-glass-subtle);
+    backdrop-filter: blur($blur-lg);
+    border: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+    border-radius: $radius-xl;
+    box-shadow: $shadow-glass-lg;
+    padding: $space-6;
+    position: relative;
+
+    // Tablet and up: enhanced padding
+    @media (min-width: $breakpoint-md) {
+      padding: $space-8;
+    }
+
+    // Desktop: maximum padding
+    @media (min-width: $breakpoint-lg) {
+      padding: $space-12;
+    }
+  }
+}
+
+// ============================================================================
+// SETTINGS SECTION - CONTENT SECTIONS
+// ============================================================================
+
+.settings-section {
+  h2 {
+    color: $text-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $space-3 0;
+    letter-spacing: -0.01em;
+
+    // Tablet and up: larger heading
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  > p {
+    color: $text-secondary;
+    font-size: $font-size-base;
+    line-height: $line-height-relaxed;
+    margin: 0 0 $space-8 0;
+
+    // Tablet and up: larger text
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+// ============================================================================
+// PROFILE FORM - ENTERPRISE FORM STYLING
+// ============================================================================
+
+.profile-form {
+  .form-group {
+    margin-bottom: $space-6;
+
+    &:last-of-type {
+      margin-bottom: $space-8;
+    }
+
+    label {
+      display: block;
+      margin-bottom: $space-2;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      // Tablet and up: larger labels
+      @media (min-width: $breakpoint-md) {
+        font-size: $font-size-base;
+      }
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: $space-4;
+      background: rgba(255, 255, 255, $opacity-glass-light);
+      backdrop-filter: blur($blur-md);
+      border: 1px solid rgba(255, 255, 255, $opacity-glass-medium);
+      border-radius: $radius-lg;
+      color: $text-primary;
+      font-size: $font-size-base;
+      font-family: $font-family-primary;
+      transition: all $transition-fast;
+      min-height: $input-height-base;
+
+      &::placeholder {
+        color: $text-tertiary;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: rgba($brand-primary, $opacity-glass-intense);
+        box-shadow: $shadow-focus-lg;
+        background: rgba(255, 255, 255, $opacity-glass-base);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background: rgba(255, 255, 255, $opacity-glass-subtle);
+      }
+
+      // Tablet and up: larger inputs
+      @media (min-width: $breakpoint-md) {
+        padding: $space-5;
+        font-size: $font-size-lg;
+        min-height: $input-height-lg;
+      }
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right $space-3 center;
+      background-repeat: no-repeat;
+      background-size: $space-4;
+      padding-right: $space-10;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin-top: $space-8;
+    padding-top: $space-6;
+    border-top: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+    position: relative;
+
+    // Tablet and up: horizontal layout with alignment
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      gap: $space-4;
+      justify-content: flex-end;
+    }
+
+    .btn,
+    button {
+      // Mobile: full width buttons
+      @media (max-width: #{$breakpoint-md - 1px}) {
+        width: 100%;
+      }
+      
+      // Desktop: auto width with min-width
+      @media (min-width: $breakpoint-md) {
+        width: auto;
+        min-width: calc($space-10 * 4);
+      }
+    }
+    
+    // Special styling for primary action button
+    .btn-primary,
+    button[type="submit"] {
+      background: linear-gradient(135deg, $brand-primary, rgba($brand-primary, 0.85));
+      backdrop-filter: blur($blur-md);
+      border: 1px solid rgba(255, 255, 255, $opacity-glass-medium);
+      
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, $brand-primary-light, $brand-primary);
+        box-shadow: $shadow-glass-xl;
+      }
+    }
+    
+    // Secondary button styling (Ask Assistant)
+    .btn-secondary,
+    button:not([type="submit"]) {
+      background: rgba(255, 255, 255, $opacity-glass-light);
+      backdrop-filter: blur($blur-md);
+      border: 1px solid rgba(255, 255, 255, $opacity-glass-medium);
+      color: $text-secondary;
+      
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, $opacity-glass-medium);
+        border-color: rgba(255, 255, 255, $opacity-glass-dense);
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SETTINGS OPTIONS - GRID LAYOUTS
+// ============================================================================
+
+.security-options,
+.notification-options,
+.privacy-options,
+.integration-options {
+  display: grid;
+  gap: $space-6;
+  grid-template-columns: 1fr;
+
+  // Tablet and up: two columns
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-8;
+  }
+
+  // Large desktop: three columns for integrations
+  @media (min-width: $breakpoint-xl) {
+    &.integration-options {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+// ============================================================================
+// SETTINGS ITEMS - INDIVIDUAL OPTION CARDS
+// ============================================================================
+
+.security-item,
+.notification-item,
+.privacy-item,
+.integration-item {
+  background: rgba(255, 255, 255, $opacity-glass-subtle);
+  backdrop-filter: blur($blur-lg);
+  border: 1px solid rgba(255, 255, 255, $opacity-glass-base);
+  border-radius: $radius-lg;
+  padding: $space-6;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba(255, 255, 255, $opacity-glass-light);
+    border-color: rgba(255, 255, 255, $opacity-glass-heavy);
+    box-shadow: $shadow-glass-xl;
+    transform: translateY(-2px);
+  }
+
+  // Tablet and up: enhanced padding
+  @media (min-width: $breakpoint-md) {
+    padding: $space-8;
+  }
+
+  h3 {
+    color: $text-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    margin: 0 0 $space-3 0;
+    letter-spacing: -0.01em;
+
+    // Tablet and up: larger heading
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    margin: 0 0 $space-6 0;
+
+    // Tablet and up: larger text
+    @media (min-width: $breakpoint-md) {
+      font-size: $font-size-base;
+    }
+  }
+
+  .btn,
+  button {
+    width: 100%;
+
+    // Tablet and up: auto width
+    @media (min-width: $breakpoint-md) {
+      width: auto;
+      min-width: calc($space-10 * 3.5);
+    }
+  }
+}
+
+// ============================================================================
+// SPECIAL STYLING FOR DANGER ACTIONS
+// ============================================================================
+
+.privacy-item {
+  &:last-child {
+    background: rgba($status-error, $opacity-glass-base);
+    backdrop-filter: blur($blur-lg);
+    border-color: rgba($status-error, 0.3);
+
+    &:hover {
+      background: rgba($status-error, $opacity-glass-heavy);
+      border-color: rgba($status-error, $opacity-glass-intense);
+      box-shadow: $shadow-glass-xl;
+    }
+
+    h3 {
+      color: $status-error;
+    }
+  }
+}
+
+// ============================================================================
+// LOADING STATES
+// ============================================================================
+
+.settings-section {
+  &.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: $space-8;
+      height: $space-8;
+      border: $space-1 solid $border-subtle;
+      border-top-color: $brand-primary;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
+// Mobile-specific adjustments
+@media (max-width: #{$breakpoint-md - 1px}) {
+  .settings-layout {
+    .settings-sidebar {
+      order: -1; // Move to top
+      margin-bottom: $space-4;
+      margin-top: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: $surface-background;
+      padding: $space-2 0;
+    }
+
+    .settings-content-area {
+      order: 1;
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY($space-5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-section {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+// ============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// ============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-section,
+  .security-item,
+  .notification-item,
+  .privacy-item,
+  .integration-item,
+  .settings-sidebar nav ul li {
+    animation: none;
+    transition: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .settings-sidebar nav ul li {
+    border-width: 2px;
+
+    &.active {
+      border-right-width: 6px;
+    }
+  }
+
+  .security-item,
+  .notification-item,
+  .privacy-item,
+  .integration-item {
+    border-width: 2px;
+  }
+}
+
+// ============================================================================
+// PRINT STYLES
+// ============================================================================
+
+@media print {
+  .settings-page-container {
+    background: white;
+    box-shadow: none;
+  }
+
+  .settings-sidebar {
+    display: none;
+  }
+
+  .settings-content-area {
+    width: 100%;
+    box-shadow: none;
+    border: none;
+  }
+
+  .security-item,
+  .notification-item,
+  .privacy-item,
+  .integration-item {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid $border-primary;
+  }
+} 

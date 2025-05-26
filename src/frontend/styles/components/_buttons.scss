@@ -1,0 +1,407 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:color';
+@use 'sass:math';
+
+// Define improved button colors with better contrast - using solid colors for compatibility
+$button-primary-bg: #4c7bd9; // Premium blue with excellent contrast
+$button-primary-hover-bg: #3a6bc8; // Darker on hover
+$button-primary-active-bg: #2d5bb7; // Even darker when active
+
+$button-secondary-bg: rgba(55, 65, 75, 0.8); // Better contrast
+$button-secondary-border: rgba(75, 85, 95, 0.6); // More visible border
+$button-secondary-hover-bg: rgba(65, 75, 85, 0.9);
+
+$button-danger-bg: #dc3545; // Standard danger red
+$button-danger-hover-bg: #c82333; // Darker on hover
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-medium;
+  line-height: 1.4;
+  color: $button-text-secondary;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background: $button-glass-secondary;
+  backdrop-filter: blur($blur-md);
+  border: 1px solid $button-glass-border;
+  padding: math.div($spacer, 1.5) ($spacer * 1.75);
+  font-size: $font-size-button-default;
+  height: 44px;
+  min-height: 44px;
+  border-radius: $radius-lg;
+  transition: all $transition-premium;
+  letter-spacing: 0.025em;
+  font-family: $font-family-sans-serif;
+  text-shadow: $button-text-shadow;
+  box-shadow: $button-shadow-base;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  &:hover {
+    text-decoration: none;
+    background: $button-glass-secondary-hover;
+    border-color: $button-glass-border-hover;
+    color: $button-text-secondary-hover;
+    transform: translateY(-1px);
+    box-shadow: $button-shadow-hover;
+  }
+
+  &:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba($button-glass-primary, 0.5), 
+                $button-shadow-hover;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:active {
+    background: $button-glass-secondary-active;
+    transform: translateY(0);
+    box-shadow: $button-shadow-active;
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: $button-shadow-active;
+    background: rgba(60, 70, 80, 0.8);
+    border-color: rgba(80, 90, 100, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// Primary Button - Premium glassmorphic design
+.btn-primary {
+  background: linear-gradient(135deg, $button-glass-primary 0%, $button-glass-primary-hover 100%);
+  backdrop-filter: blur($blur-md);
+  border: 1px solid $button-glass-primary;
+  color: $button-text-primary;
+  font-weight: $font-weight-semibold;
+  text-shadow: $button-text-shadow-primary;
+  box-shadow: $button-shadow-primary;
+
+  &:hover {
+    background: linear-gradient(135deg, $button-glass-primary-hover 0%, $button-glass-primary-active 100%);
+    border-color: $button-glass-primary-hover;
+    color: $button-text-primary;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(76, 123, 217, 0.4), 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus-visible {
+    color: $button-text-primary;
+    border-color: $button-glass-primary-hover;
+    box-shadow: 0 0 0 3px rgba($button-glass-primary, 0.4), 
+                $button-shadow-primary;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:active,
+  &.active {
+    background: $button-glass-primary-active;
+    border-color: $button-glass-primary-active;
+    color: $button-text-primary;
+    transform: translateY(0);
+    box-shadow: $button-shadow-active;
+  }
+
+  // Specific disabled/loading state for primary buttons with much better contrast
+  &:disabled,
+  &.disabled {
+    background-color: #6b7280; // Solid gray background for excellent contrast
+    border-color: #6b7280;
+    color: #ffffff; // High contrast white text
+    opacity: 1; // Remove opacity to maintain text contrast
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+    text-shadow: none; // Remove text shadow for cleaner look when disabled
+    
+    // Ensure text remains highly visible when loading
+    &.btn-loading {
+      background-color: #6b7280;
+      border-color: #6b7280;
+      color: #ffffff;
+      
+      .spinner {
+        // Ensure spinner is visible on the new background
+        opacity: 1;
+        
+        circle {
+          stroke: rgba(255, 255, 255, 0.3);
+        }
+        
+        path {
+          fill: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+// Secondary Button - Premium glassmorphic design
+.btn-secondary {
+  background: $button-glass-secondary;
+  backdrop-filter: blur($blur-md);
+  border: 1px solid $button-glass-border;
+  color: $button-text-secondary;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    background: $button-glass-secondary-hover;
+    border-color: $button-glass-border-hover;
+    color: $button-text-secondary-hover;
+    transform: translateY(-1px);
+    box-shadow: $button-shadow-hover;
+  }
+
+  &:focus-visible {
+    border-color: $button-glass-border-hover;
+    box-shadow: 0 0 0 2px rgba($button-glass-border, 0.5);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:active,
+  &.active {
+    background: $button-glass-secondary-active;
+    border-color: $button-glass-border-active;
+    transform: translateY(0);
+    box-shadow: $button-shadow-active;
+  }
+}
+
+// Danger Button - Enhanced visibility
+.btn-danger {
+  background: linear-gradient(135deg, $button-danger-bg 0%, color.adjust($button-danger-bg, $lightness: 8%) 100%);
+  border: 1px solid $button-danger-bg;
+  color: #ffffff;
+  font-weight: $font-weight-semibold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: linear-gradient(135deg, $button-danger-hover-bg 0%, color.adjust($button-danger-hover-bg, $lightness: 8%) 100%);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba($button-danger-bg, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus-visible {
+    border-color: $button-danger-hover-bg;
+    box-shadow: 0 0 0 3px rgba($button-danger-bg, 0.4);
+  }
+
+  &:active,
+  &.active {
+    background: color.adjust($button-danger-hover-bg, $lightness: -5%);
+    border-color: color.adjust($button-danger-hover-bg, $lightness: -5%);
+    transform: translateY(0);
+  }
+}
+
+// Outline buttons
+.btn-outline-primary {
+  color: rgba(86, 119, 152, 0.9); // Muted blue that's visible on dark bg
+  background-color: transparent;
+  border-color: rgba(86, 119, 152, 0.4);
+
+  &:hover {
+    color: $text-color-light-on-accent;
+    background-color: rgba(76, 109, 142, 0.9);
+    border-color: rgba(86, 119, 152, 0.6);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    border-color: rgba(86, 119, 152, 0.6);
+    box-shadow: 0 0 0 2px rgba(76, 109, 142, 0.25), 0 0 0 calc(2px * 2.5) rgba(76, 109, 142, 0.15);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
+  
+  &:active,
+  &.active {
+    background-color: rgba(66, 99, 132, 0.9);
+    transform: translateY(0); // Reset transform on active state
+  }
+}
+
+// New style for a subtle outline button
+.btn-outline-subtle {
+  color: $text-color-light; // Light grey text
+  background-color: transparent;
+  border-color: rgba($text-color-light, 0.2); // A fairly subtle light grey border
+
+  &:hover {
+    color: $text-color-light;
+    background-color: rgba($text-color-light, 0.08); // Very subtle light grey background on hover
+    border-color: rgba($text-color-light, 0.3); // Border slightly more prominent on hover
+    transform: translateY(-1px); // Consistent hover effect
+  }
+
+  &:focus-visible {
+    // Standard focus ring, but using a light border color to match the theme
+    border-color: rgba($text-color-light, 0.35);
+    box-shadow: 0 0 0 2px rgba($text-color-light, 0.15), 0 0 0 calc(2px * 2.5) rgba($text-color-light, 0.1);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
+
+  &:active,
+  &.active {
+    color: $text-color-light;
+    background-color: rgba($text-color-light, 0.12); // Slightly more pronounced background on active
+    border-color: rgba($text-color-light, 0.35);
+    transform: translateY(0); // Reset transform on active state
+  }
+}
+
+// Ghost button style
+.btn-ghost {
+  color: rgba(86, 119, 152, 0.9); // Muted blue that's visible on dark bg
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover {
+    color: rgba(96, 129, 162, 0.95);
+    background-color: rgba(86, 119, 152, 0.08);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(76, 109, 142, 0.25), 0 0 0 calc(2px * 2.5) rgba(76, 109, 142, 0.15);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
+  
+  &:active,
+  &.active {
+    background-color: rgba(86, 119, 152, 0.12);
+    transform: translateY(0); // Reset transform on active state
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: $spacer-2 $spacer-4;
+  font-size: $font-size-ui-element;
+  height: 36px; // Reduced height for small buttons
+  min-height: 36px;
+
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    // Mobile optimizations for small buttons
+    padding: $spacer-2 $spacer-3;
+    height: 38px; // Slightly taller on mobile for better touch target
+    min-height: 38px;
+    min-width: 90px; // Ensure minimum width for text
+    font-size: 0.9rem; // Slightly larger font for better readability
+  }
+}
+
+.btn-lg {
+  padding: ($spacer-3) ($spacer-6);
+  font-size: $font-size-lg;
+  height: 52px;
+  min-height: 52px;
+}
+
+// Button with loading spinner
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+  
+  .spinner {
+    margin-right: $spacer-2;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+// Button with icon
+.button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.button-icon-left {
+    margin-right: $spacer-2;
+  }
+  
+  &.button-icon-right {
+    margin-left: $spacer-2;
+  }
+  
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+// Button text wrapper - helps with spacing when icons are present
+.button-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Button that fills its container width
+.btn-full-width {
+  width: 100%;
+  display: flex;
+}
+
+.settings-button-primary {
+  @extend .btn-primary; // Inherit base primary button styles
+  width: fit-content;   // Override width if necessary
+  padding: $spacer-3 $spacer-5; // e.g. 12px 20px, adjust as needed
+  font-size: $font-size-button-default; // Use global var
+
+  &:focus,
+  &.focus {
+    // Consistent focus style using more muted colors
+    box-shadow: 0 0 0 2px rgba($button-primary-bg, 0.4), 0 0 0 calc(2px * 2.5) rgba($button-primary-bg, 0.25);
+  }
+
+  &:hover:not(:disabled) {
+    background: $button-primary-hover-bg;
+    border-color: $button-primary-hover-bg;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: color.adjust($dark-theme-card-bg, $lightness: 5%); // Slightly lighter than card bg
+    border-color: color.adjust($dark-theme-card-bg, $lightness: 5%);
+    color: $dark-theme-text-muted; // Use muted text color for disabled
+    cursor: not-allowed;
+    opacity: 0.65; // Standard opacity for disabled elements
+  }
+}

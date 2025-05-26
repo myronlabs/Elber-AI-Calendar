@@ -1,0 +1,66 @@
+{
+  "name": "elber-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Frontend for the Elber Productivity Platform",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "NODE_NO_WARNINGS=1 eslint . --ext ts,tsx --ignore-pattern 'dist/*' --report-unused-disable-directives --max-warnings 8",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "papaparse": "^5.5.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "react-toastify": "^11.0.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.14.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20.17.47",
+    "@types/papaparse": "^5.3.16",
+    "@types/react": "^18.2.0",
+    "@types/react-datepicker": "^6.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/coverage-v8": "^3.1.4",
+    "@vitest/ui": "^3.1.4",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.17.0",
+    "jsdom": "^26.1.0",
+    "sass": "^1.77.0",
+    "source-map-js": "^1.2.1",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.18.4",
+    "vite": "^5.4.19",
+    "vitest": "^3.1.4"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

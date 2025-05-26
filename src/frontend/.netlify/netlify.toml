@@ -1,0 +1,172 @@
+functionsDirectory = "/home/jman/tmp/Myron_Labs/Elber1-3.6/src/backend/functions"
+functionsDirectoryOrigin = "config"
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[functions]
+
+[functions.assistant]
+included_files = ["src/backend/services/supabaseAdmin.ts", "src/backend/services/configService.ts", "src/backend/types/domain.ts", "src/backend/utils/validation.ts", "src/backend/functions/_shared/utils.ts"]
+
+[functions.assistant-alerts]
+included_files = ["src/backend/services/alertService.ts", "src/backend/services/fastAlertFormatter.ts", "src/backend/services/configService.ts", "src/backend/types/domain.ts", "src/backend/utils/validation.ts", "src/backend/functions/_shared/openai-helpers.ts", "src/backend/functions/_shared/feedback.ts", "src/backend/functions/_shared/utils.ts"]
+
+[functions.assistant-alerts-fast]
+included_files = ["src/backend/services/fastAlertFormatter.ts", "src/backend/services/supabaseAdmin.ts", "src/backend/types/domain.ts", "src/backend/functions/_shared/utils.ts"]
+
+[functions.process-import-queue]
+schedule = "*/5 * * * *"
+
+[functions.alerts]
+included_files = ["src/backend/services/supabaseAdmin.ts", "src/backend/functions/_shared/utils.ts"]
+
+[functions."*"]
+included_files = ["src/backend/services/**", "src/backend/types/**", "src/backend/utils/**", "src/backend/functions/_shared/**", "src/backend/functions/alerts.ts"]
+node_bundler = "esbuild"
+timeout = 25.0
+
+[functions."*".environment]
+VITE_SUPABASE_URL = "${SUPABASE_URL}"
+VITE_SUPABASE_ANON_KEY = "${SUPABASE_ANON_KEY}"
+VITE_SUPABASE_SERVICE_KEY = "${SUPABASE_SERVICE_KEY}"
+
+[build]
+publish = "/home/jman/tmp/Myron_Labs/Elber1-3.6/src/frontend/dist"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "if [ -z \"$NETLIFY_MANUAL_DEPLOY\" ]; then ./scripts/netlify_build_and_deploy.sh; else echo '⚠️ BUILD SCRIPT SKIPPED: Running from manual deploy command - preventing recursive execution'; fi"
+functions = "/home/jman/tmp/Myron_Labs/Elber1-3.6/src/backend/functions"
+
+[build.environment]
+NODE_ENV = "production"
+NETLIFY_FUNCTIONS_LOG_LEVEL = "debug"
+NODE_VERSION = "18"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/.netlify/functions/*"
+
+[headers.values]
+Access-Control-Allow-Origin = "*"
+Access-Control-Allow-Headers = "Content-Type, Authorization"
+Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+[[redirects]]
+from = "/api/events*"
+to = "/.netlify/functions/events/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/:function"
+to = "/.netlify/functions/:function"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/verify-email/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/verify-email*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/reset-password/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/reset-password*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/assets/*"
+to = "/assets/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -1,0 +1,154 @@
+functionsDirectory = "/home/jman/tmp/Myron_Labs/Elber1-3.2.1/src/backend/functions"
+functionsDirectoryOrigin = "config"
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[build]
+publish = "/home/jman/tmp/Myron_Labs/Elber1-3.2.1/src/frontend/dist"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "if [ -z \"$NETLIFY_MANUAL_DEPLOY\" ]; then ./scripts/netlify_build_and_deploy.sh; else echo '⚠️ BUILD SCRIPT SKIPPED: Running from manual deploy command - preventing recursive execution'; fi"
+functions = "/home/jman/tmp/Myron_Labs/Elber1-3.2.1/src/backend/functions"
+
+[build.environment]
+NODE_ENV = "production"
+NETLIFY_FUNCTIONS_LOG_LEVEL = "debug"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions.process-import-queue]
+schedule = "*/5 * * * *"
+
+[functions."*"]
+included_files = ["src/backend/functions/assistant-router.ts", "src/backend/functions/assistant-general.ts", "src/backend/functions/assistant-contacts.ts", "src/backend/functions/assistant-contacts-fast.ts", "src/backend/functions/assistant-calendar.ts", "src/backend/functions/chat-history.ts", "src/backend/functions/google-oauth.ts", "src/backend/functions/google-contacts.ts", "src/backend/functions/contacts-api.ts", "src/backend/functions/contacts-search.ts", "src/backend/functions/contacts-instant-search.ts", "src/backend/functions/contacts-import-processor.ts", "src/backend/functions/settings.ts", "src/backend/functions/contacts-management.ts", "src/backend/functions/validate-token.ts", "src/backend/functions/verify-email.ts", "src/backend/functions/signup.ts", "src/backend/functions/auth-check.ts", "src/backend/functions/reset-password.ts", "src/backend/functions/forgot-password.ts"]
+node_bundler = "esbuild"
+timeout = 25.0
+
+[[headers]]
+for = "/.netlify/functions/*"
+
+[headers.values]
+Access-Control-Allow-Origin = "*"
+Access-Control-Allow-Headers = "Content-Type, Authorization"
+Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+[[redirects]]
+from = "/api/events*"
+to = "/.netlify/functions/events/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/:function"
+to = "/.netlify/functions/:function"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/verify-email/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/verify-email*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/reset-password/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/reset-password*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/assets/*"
+to = "/assets/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

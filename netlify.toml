@@ -1,0 +1,150 @@
+[build]
+  # Add a check that prevents recursive execution during manual deployment
+  command = "if [ -z \"$NETLIFY_MANUAL_DEPLOY\" ]; then ./scripts/netlify_build_and_deploy.sh; else echo '⚠️ BUILD SCRIPT SKIPPED: Running from manual deploy command - preventing recursive execution'; fi"
+  publish = "src/frontend/dist"
+  functions = "src/backend/functions"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+[[redirects]]
+  from = "/api/events*"
+  to = "/.netlify/functions/events/:splat"
+  status = 200
+  force = true  # Higher precedence than generic rule
+
+# This rule MUST come BEFORE the more general /api/* and /* rules
+# to correctly route API calls to functions.
+[[redirects]]
+  from = "/api/:function"
+  to = "/.netlify/functions/:function"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# This rule is for client-side routing for the verify-email page itself (not the API call)
+# It should only match when there's NO /api/ prefix.
+[[redirects]]
+  from = "/verify-email/*" # Catches /verify-email/anything
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/verify-email*"   # Catches /verify-email and /verify-email?query=params
+  to = "/index.html"
+  status = 200
+
+# Rules for reset-password page with hash fragments (#access_token=...)
+[[redirects]]
+  from = "/reset-password/*" # Catches /reset-password/anything
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/reset-password*"   # Catches /reset-password and /reset-password?query=params
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: Add a development context if you use 'netlify dev'
+# [dev]
+#   command = "npm run dev --prefix src/frontend" # Command to start your Vite dev server
+#   targetPort = 3000 # The port your Vite dev server runs on
+#   publish = "src/frontend/dist" # Vite's dev server doesn't typically write to dist, but good to keep consistent for functions
+#   framework = "#static" # Or vite, if auto-detection works as expected with your setup
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "src/backend/functions"
+  # included_files can be used if specific files are needed, 
+  # but often `directory` is enough if all functions are within.
+  included_files = [
+    "src/backend/services/**", 
+    "src/backend/types/**", 
+    "src/backend/utils/**",
+    "src/backend/functions/_shared/**",
+    "src/backend/functions/alerts.ts"
+  ]
+
+[functions."*"] # Wildcard for all functions
+  timeout = 25
+  # Environment variables defined here will be available to all functions
+  [functions."*".environment]
+    VITE_SUPABASE_URL = "${SUPABASE_URL}"
+    VITE_SUPABASE_ANON_KEY = "${SUPABASE_ANON_KEY}"
+    VITE_SUPABASE_SERVICE_KEY = "${SUPABASE_SERVICE_KEY}" # Note: Consider if this should be SUPABASE_SERVICE_ROLE_KEY
+
+# Assistant functions with specific configurations
+[functions.assistant]
+  included_files = [
+    "src/backend/services/supabaseAdmin.ts",
+    "src/backend/services/configService.ts",
+    "src/backend/types/domain.ts",
+    "src/backend/utils/validation.ts",
+    "src/backend/functions/_shared/utils.ts"
+  ]
+
+[functions.assistant-alerts]
+  included_files = [
+    "src/backend/services/alertService.ts",
+    "src/backend/services/fastAlertFormatter.ts",
+    "src/backend/services/configService.ts",
+    "src/backend/types/domain.ts",
+    "src/backend/utils/validation.ts",
+    "src/backend/functions/_shared/openai-helpers.ts",
+    "src/backend/functions/_shared/feedback.ts",
+    "src/backend/functions/_shared/utils.ts"
+  ]
+
+[functions.assistant-alerts-fast]
+  included_files = [
+    "src/backend/services/fastAlertFormatter.ts",
+    "src/backend/services/supabaseAdmin.ts",
+    "src/backend/types/domain.ts",
+    "src/backend/functions/_shared/utils.ts"
+  ]
+
+# Add scheduled functions for background processing
+[functions.process-import-queue]
+  schedule = "*/5 * * * *"  # Run every 5 minutes
+
+# Alerts function configuration
+[functions.alerts]
+  included_files = [
+    "src/backend/services/supabaseAdmin.ts",
+    "src/backend/functions/_shared/utils.ts"
+  ]
+
+# Production context: all deploys from the Production branch 
+# set in your site's Branches settings in the UI get these settings.
+[context.production.environment]
+  # Production-specific settings
+
+# Development context: netlify dev serves the functions directly
+[context.dev.environment]
+  # For `netlify dev`, .env file variables are used primarily.
+  # These are illustrative:
+  # SUPABASE_URL = "YOUR_DEV_SUPABASE_URL"
+  # SUPABASE_ANON_KEY = "YOUR_DEV_ANON_KEY"
+  # SUPABASE_SERVICE_KEY = "YOUR_DEV_SERVICE_KEY"
+
+[build.environment]
+  NODE_ENV = "production"
+  NETLIFY_FUNCTIONS_LOG_LEVEL = "debug"
+  NODE_VERSION = "18"

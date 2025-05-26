@@ -1,0 +1,38 @@
+{
+  "name": "elber-backend-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for Elber Productivity Platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf ../../netlify/functions/* && rm -f tsconfig.tsbuildinfo",
+    "prebuild": "npm run clean",
+    "build": "tsc --build",
+    "postbuild": "node ./scripts/fix-import-paths.js && npm run copy-services",
+    "copy-services": "mkdir -p ../../netlify/functions/services && cp ./services/*.js ../../netlify/functions/services/ 2>/dev/null || true",
+    "deploy": "npm run clean && npm run build",
+    "lint": "eslint --ext .ts,.tsx . --no-error-on-unmatched-pattern"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "googleapis": "^148.0.0",
+    "jwt-decode": "^4.0.0",
+    "node-fetch": "^2.6.6",
+    "openai": "^4.47.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/jwt-decode": "^3.1.0",
+    "@types/node": "^20.12.12",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.4",
+    "@typescript-eslint/parser": "^8.18.4",
+    "eslint": "^9.17.0",
+    "globals": "^15.15.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.18.4"
+  }
+}

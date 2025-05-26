@@ -1,0 +1,460 @@
+// ============================================================================
+// DYNAMIC SUGGESTION BUBBLES - ENTERPRISE PROFESSIONAL STYLING
+// High-end interactive suggestion interface for AI assistant
+// ============================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// SUGGESTION CONTAINER - MAIN WRAPPER
+// ============================================================================
+
+.dynamic-suggestion-container {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-3;
+  background: rgba(255, 255, 255, $opacity-glass-subtle);
+  border: 1px solid rgba(255, 255, 255, $opacity-border-subtle);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-glass-sm;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+
+  // Mobile: compact spacing
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    gap: $space-2;
+    padding: $space-2;
+    border-radius: $radius-md;
+  }
+
+  // Desktop: slightly larger spacing
+  @media (min-width: $breakpoint-lg) {
+    gap: $space-4;
+    padding: $space-4;
+  }
+
+  // Subtle glass shimmer effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(255, 255, 255, $opacity-glass-light) 50%,
+      transparent 100%
+    );
+    animation: shimmer 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Ensure content is above background
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ============================================================================
+// SUGGESTION LEVELS - HIERARCHICAL LAYOUT
+// ============================================================================
+
+.suggestion-level {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInUp 0.3s ease-out;
+
+  // Mobile: no margin for space efficiency
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    gap: $space-1;
+    
+    &.suggestion-level-2,
+    &.suggestion-level-3 {
+      margin-left: 0;
+    }
+  }
+
+  // Desktop: slightly larger gaps
+  @media (min-width: $breakpoint-lg) {
+    gap: $space-3;
+  }
+  
+  // Small screens: more compact gaps
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    gap: $space-1;
+  }
+
+  // Level-specific styling
+  &.suggestion-level-1 {
+    // Main categories - elegant and compact
+    .suggestion-bubble {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      padding: $space-2 $space-3;
+      background: $gradient-glass-subtle;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      color: $text-secondary;
+      border: 1px solid rgba($color-white, $opacity-border-subtle);
+      box-shadow: $shadow-elevated-sm;
+      text-transform: capitalize;
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+
+      // Mobile: reasonable size
+      @media (max-width: #{$breakpoint-md - 1px}) {
+        font-size: $font-size-xs;
+        padding: $space-2 $space-3;
+      }
+
+      // Desktop: slightly larger
+      @media (min-width: $breakpoint-lg) {
+        font-size: $font-size-base;
+        padding: $space-2 $space-4;
+      }
+
+      // Subtle shimmer effect
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: $gradient-shimmer;
+        transition: left 0.6s ease;
+      }
+
+      &:hover {
+        background: $gradient-glass-medium;
+        transform: translateY(-1px);
+        box-shadow: $shadow-elevated-md;
+        border-color: rgba(255, 255, 255, $opacity-border-medium);
+        color: $text-primary;
+        
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &.expanded {
+        background: $gradient-brand-subtle;
+        border-color: rgba($brand-primary, $opacity-border-heavy);
+        box-shadow: $shadow-brand-sm, $shadow-inset-sm;
+        transform: translateY(-1px);
+        color: $brand-primary-light;
+      }
+    }
+  }
+
+  &.suggestion-level-2 {
+    // Sub-categories - medium prominence
+    margin-left: 0; // Remove left margin for better centering
+
+    .suggestion-bubble {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      padding: $space-2 $space-3;
+      background: rgba($color-white, $opacity-glass-light);
+      backdrop-filter: blur(15px);
+      color: $text-secondary;
+      border: 1px solid rgba($color-white, $opacity-border-base);
+      text-transform: capitalize;
+
+      // Mobile: reasonable size
+      @media (max-width: #{$breakpoint-md - 1px}) {
+        font-size: $font-size-xs;
+        padding: $space-2 $space-3;
+      }
+
+      // Desktop: slightly larger
+      @media (min-width: $breakpoint-lg) {
+        font-size: $font-size-base;
+        padding: $space-2 $space-4;
+      }
+
+      &:hover {
+        background: rgba($color-white, $opacity-glass-medium);
+        color: $text-primary;
+        border-color: rgba($color-white, $opacity-border-strong);
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: $shadow-glass-sm;
+      }
+
+      &.expanded {
+        background: $brand-primary-subtle;
+        color: $brand-primary;
+        border-color: rgba($brand-primary, 0.2);
+        box-shadow: 0 4px 12px rgba($brand-primary, 0.1);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  &.suggestion-level-3 {
+    // Specific actions - subtle but clear
+    margin-left: 0; // Remove left margin for better centering
+
+    .suggestion-bubble {
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      padding: $space-2 $space-4;
+      background: rgba($color-white, $opacity-glass-subtle);
+      backdrop-filter: blur(10px);
+      color: $text-tertiary;
+      border: 1px solid rgba($color-white, $opacity-border-subtle);
+
+      // Mobile: extra small
+      @media (max-width: #{$breakpoint-md - 1px}) {
+        font-size: $font-size-xs;
+        padding: $space-1 $space-2;
+      }
+
+      // Desktop: normal size
+      @media (min-width: $breakpoint-lg) {
+        font-size: $font-size-base;
+        padding: $space-3 $space-5;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, $opacity-glass-light);
+        color: $text-secondary;
+        border-color: rgba(255, 255, 255, $opacity-border-medium);
+        transform: translateY(-1px);
+        box-shadow: $shadow-glass-xs;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SUGGESTION BUBBLE - CORE BUTTON STYLING
+// ============================================================================
+
+.suggestion-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $transition-smooth;
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  font-family: $font-family-primary;
+  line-height: 1.4;
+  min-height: 44px; // Proper touch target size for accessibility
+
+  // Mobile: ensure touch-friendly size
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    min-height: 44px; // 44px is the minimum recommended touch target
+  }
+
+  // Desktop: can be slightly smaller since mouse is more precise
+  @media (min-width: $breakpoint-lg) {
+    min-height: 36px;
+  }
+
+  // Subtle shine effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($color-white, 0.2) 50%,
+      transparent 100%
+    );
+    transition: left $transition-smooth;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  // Focus states for accessibility
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($brand-primary, 0.3);
+  }
+
+  // Active state
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Disabled state
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    &::before {
+      display: none;
+    }
+  }
+
+  // Loading state
+  &.loading {
+    pointer-events: none;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
+// Large screens: still maintain compact design
+@media (min-width: $breakpoint-xl) {
+  .dynamic-suggestion-container {
+    gap: $space-3;
+    padding: $space-3;
+  }
+
+  .suggestion-level {
+    gap: $space-2;
+  }
+
+  .suggestion-bubble {
+    min-height: 32px;
+  }
+}
+
+// Small screens: compact layout
+@media (max-width: #{$breakpoint-sm - 1px}) {
+  .dynamic-suggestion-container {
+    gap: $space-2;
+    padding: $space-2;
+    border-radius: $radius-md;
+  }
+
+  .suggestion-level {
+    gap: $space-1;
+    
+    &.suggestion-level-2,
+    &.suggestion-level-3 {
+      margin-left: 0;
+    }
+  }
+
+  .suggestion-bubble {
+    min-height: 44px; // Ensure minimum touch target
+    border-radius: $radius-full;
+  }
+}
+
+// ============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// ============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .suggestion-bubble,
+  .suggestion-level,
+  .dynamic-suggestion-container::before {
+    animation: none;
+    transition: none;
+  }
+
+  .suggestion-bubble::before {
+    display: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .suggestion-bubble {
+    border-width: 2px;
+  }
+
+  .suggestion-level-1 .suggestion-bubble {
+    border-width: 3px;
+  }
+}
+
+// Dark mode adjustments (if needed)
+@media (prefers-color-scheme: dark) {
+  .dynamic-suggestion-container::before {
+    background: linear-gradient(
+      45deg,
+      rgba($brand-primary, 0.05) 0%,
+      rgba($brand-secondary, 0.03) 50%,
+      rgba($brand-primary, 0.05) 100%
+    );
+  }
+}
+
+// ============================================================================
+// PRINT STYLES
+// ============================================================================
+
+@media print {
+  .dynamic-suggestion-container {
+    display: none;
+  }
+} 
